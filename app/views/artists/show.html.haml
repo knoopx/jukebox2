@@ -1,0 +1,52 @@
+.page-header
+  %h1= resource.name
+
+.row
+  .span4
+    %p= image_tag(resource.image_url) unless resource.image_url.blank?
+    %p
+      = link_to "Play All", "#", :class => "btn success", "data-play-artist" => resource.id
+      = favorite_button(resource)
+
+    %strong Listeners
+    = resource.listeners
+    %br
+    %strong Play Count
+    = resource.play_count
+    %br
+    = link_to "Last.fm", resource.lastfm_url
+
+    %h3 Tags
+    %ul
+      - resource.genres.each do |genre|
+        %li= link_to genre.name, genre_artists_path(genre)
+
+  .span12
+    %h2 Description
+    = simple_format(resource.summary)
+
+    %h2 Releases
+    - resource.releases.each do |release|
+      = div_for(release) do
+        %h3= release.name
+        .artwork
+          = link_to image_tag((release.image_url.blank? ? "cd_case.png" : release.image_url), :witdh => 100, :height => 100), release
+          = link_to("Play All", "#", :class => "btn success", "data-play-tracks" => release.track_ids.to_json)
+
+        .tracks
+          %ol
+            - release.tracks.map do |track|
+              %li
+                - if release.various_artists? and track.artist
+                  = link_to track.artist.name, artist_path(track.artist)
+                  \-
+                = link_to track.title, "#", :id => dom_id(track), :class => "track", "data-play-tracks" => [track.id].to_json
+
+%hr
+
+%h2 Similar Artists
+.grid
+  - resource.similar.map do |artist|
+    .artist
+      .image= image_tag(artist.image_url)
+      .name= link_to(artist.name, artist_path(artist))

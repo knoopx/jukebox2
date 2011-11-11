@@ -1,0 +1,31 @@
+!!!
+%html
+  %head
+    %title Jukebox2
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .topbar
+      .fill
+        .container
+          = link_to "Jukebox2", root_path, :class => "brand"
+          %ul.nav
+            %li= link_to "Artists", artists_path
+            %li= link_to "Releases", releases_path
+          #player
+            .osd
+              .info
+                .artist
+                .track
+              .progress-bar
+                .seek-bar
+                  .buffer-bar
+                    .time-bar
+
+            .buttons
+              %a.btn.play.success
+              %a.btn.skip.error
+
+    .container
+      .content= yield

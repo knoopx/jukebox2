@@ -1,0 +1,19 @@
+.page-header
+  %h1 Releases
+  = navigation(:class => :pills, :namespace => :scope) do |n|
+    - n.default link_to "All", releases_path
+    - n.favorited link_to "Favorited", releases_path(:scope => :favorited)
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Date
+  %tbody
+    - collection.each do |resource|
+      %tr
+        %td
+          %span= link_to resource.name, resource
+        %td= time_ago_in_words resource.created_at
+
+= paginate(collection)

@@ -1,0 +1,35 @@
+.page-header
+  %h1 Dashboard
+
+.row
+  .span-one-third
+    .panel
+      %h2 Recenlty added releases
+      %ul
+        - Release.recent(20).map do |resource|
+          %li
+            %span= link_to(resource.name, resource)
+            %small= time_ago_in_words(resource.created_at)
+
+  .span-one-third
+    .panel
+      %h2 Recenlty favorited artists
+      %ul
+        - Artist.favorited.limit(10).map do |resource|
+          %li
+            %span= link_to(resource.name, resource)
+            %small= time_ago_in_words(resource.created_at)
+
+      %h2 Recenlty added artists
+      %ul
+        - Artist.recent(10).map do |resource|
+          %li
+            %span= link_to(resource.name, resource)
+            %small= time_ago_in_words(resource.created_at)
+
+  .span-one-third
+    .panel
+      %h2 Top Genres
+      %ul
+        - Genre.top(20).map do |resource|
+          %li= link_to("#{resource.name} (#{resource.artists_count})", genre_artists_path(resource))
