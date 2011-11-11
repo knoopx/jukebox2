@@ -21,6 +21,9 @@
 
   .span12
     %h2 Description
-    %pre#description= Iconv.new('UTF-8', 'IBM437').conv(File.open(resource.description_file, "rb").read)
+    - if resource.description_file
+      %pre#description= Iconv.new('UTF-8', 'IBM437').conv(File.open(resource.description_file, "rb").read)
+    - else
+      %em No description
 
 
