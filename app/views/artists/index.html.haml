@@ -27,7 +27,7 @@
         %td= resource.play_count
         %td= resource.listeners
         %td
-          = link_to "Play All", nil, :class => "btn success", "data-play-artist" => resource.id
+          = link_to "&#9658;".html_safe, nil, :class => "btn success", "data-play-artist" => resource.id
           = favorite_button(resource)
 
 = paginate(collection)
