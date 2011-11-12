@@ -6,7 +6,7 @@ class Release < ActiveRecord::Base
 
   validates_uniqueness_of :path
   before_save :process_release
-  # after_create :update_metadata
+  after_create :update_metadata
 
   scope :recent, lambda { |limit| order(:created_at.desc).limit(limit) }
 
