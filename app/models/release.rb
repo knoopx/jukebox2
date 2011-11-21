@@ -5,7 +5,7 @@ class Release < ActiveRecord::Base
   has_many :tracks, :dependent => :destroy
 
   validates_uniqueness_of :path
-  before_save :process_release
+  before_create :process_release
   after_create :update_metadata
 
   scope :recent, lambda { |limit| order(:created_at.desc).limit(limit) }
@@ -16,10 +16,11 @@ class Release < ActiveRecord::Base
     artists = []
     albums = []
     years = []
+    tracks = []
 
     Dir.glob(File.join(self.path, "*.mp3")) do |track_file|
       id3 = TagLib2::File.new(track_file)
-      self.tracks.build do |track|
+      tracks << Track.new do |track|
         track.number = id3.track
         track.title = id3.title
         track.filename = File.basename(track_file)
@@ -40,6 +41,7 @@ class Release < ActiveRecord::Base
     self.title = albums.first
     self.year = years.first
     self.various_artists = artists.size > 1
+    self.tracks = tracks
 
     self.artists = artists.map do |artist_name|
       Artist.find_or_create_by_normalized_name(artist_name.to_slug.normalize.to_s, :name => artist_name)
