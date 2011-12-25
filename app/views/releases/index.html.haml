@@ -13,12 +13,14 @@
   %thead
     %tr
       %th Name
+      %th= sort_link(@search, :tracks_count)
       %th Date
   %tbody
     - collection.each do |resource|
       %tr
         %td
           %span= link_to resource.name, resource
+        %td= resource.tracks_count
         %td= time_ago_in_words resource.created_at
 
 = paginate(collection)
