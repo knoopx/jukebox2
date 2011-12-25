@@ -14,7 +14,7 @@
     %tr
       %th Name
       %th= sort_link(@search, :tracks_count)
-      %th Date
+      %th= sort_link(@search, :created_at)
   %tbody
     - collection.each do |resource|
       %tr
