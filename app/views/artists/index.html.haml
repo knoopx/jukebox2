@@ -15,6 +15,7 @@
     %tr
       %th Name
       %th Genres
+      %th= sort_link(@search, :tracks_count)
       %th= sort_link(@search, :play_count)
       %th= sort_link(@search, :listeners)
       %th{:width => 160}
@@ -24,6 +25,7 @@
         %td
           %span= link_to resource.name, resource
         %td= raw resource.genres.take(10).map { |genre| link_to genre.name, genre_artists_path(genre) }.to_sentence
+        %td= resource.tracks_count
         %td= resource.play_count
         %td= resource.listeners
         %td
