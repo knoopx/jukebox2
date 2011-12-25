@@ -4,6 +4,11 @@
     - n.default link_to "All", releases_path
     - n.favorited link_to "Favorited", releases_path(:scope => :favorited)
 
+  = form_for(@search, :url => collection_path, :html => {:class => "form-stacked"}) do |f|
+    %fieldset
+      = f.label :name_like
+      = f.text_field :name_like
+
 %table
   %thead
     %tr
