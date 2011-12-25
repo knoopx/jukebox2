@@ -2,7 +2,7 @@ class Release < ActiveRecord::Base
   include Jukebox2::Favorites::ModelMethods
 
   has_and_belongs_to_many :artists
-  has_many :tracks, :dependent => :destroy
+  has_many :tracks, :dependent => :destroy, :order => :number.asc
 
   validates_uniqueness_of :path
   before_create :process_release
