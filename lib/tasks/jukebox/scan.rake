@@ -15,6 +15,15 @@ namespace :jukebox2 do
     end
   end
 
+  task :prune => :environment do
+    Release.all.each do |release|
+      unless Dir.exist?(release.path)
+        puts " * Removing #{release.path}"
+        release.destroy
+      end
+    end
+  end
+
   task :scan => :environment do
     Jukebox2::Indexer.new
   end
