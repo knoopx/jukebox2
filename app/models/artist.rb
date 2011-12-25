@@ -3,7 +3,7 @@ require 'open-uri'
 class Artist < ActiveRecord::Base
   include Jukebox2::Favorites::ModelMethods
 
-  has_and_belongs_to_many :releases
+  has_and_belongs_to_many :releases, :order => :year.desc
   has_many :taggings
   has_many :tracks
   has_many :genres, :through => :taggings
