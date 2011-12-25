@@ -4,7 +4,7 @@ module Jukebox2
       extend ActiveSupport::Concern
 
       included do
-        scope :favorited, where { favorited_at != nil }
+        scope :favorited, where { favorited_at != nil }.order { favorited_at.desc }
 
         def favorited?
           !favorited_at.nil?

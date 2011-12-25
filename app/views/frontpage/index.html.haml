@@ -18,7 +18,7 @@
         - Artist.favorited.limit(10).map do |resource|
           %li
             %span= link_to(resource.name, resource)
-            %small= time_ago_in_words(resource.created_at)
+            %small= time_ago_in_words(resource.favorited_at)
 
       %h2 Recenlty added artists
       %ul
