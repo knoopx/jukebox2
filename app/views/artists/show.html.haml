@@ -28,7 +28,10 @@
     %h2 Releases
     - resource.releases.each do |release|
       = div_for(release) do
-        %h3= release.name
+        %h3
+          = link_to release.title, release
+          %small= release.year
+
         .artwork
           = link_to image_tag((release.image_url.blank? ? "cd_case.png" : release.image_url), :witdh => 100, :height => 100), release
           = link_to("&#9658;".html_safe, "#", :class => "btn success", "data-play-tracks" => release.track_ids.to_json)
