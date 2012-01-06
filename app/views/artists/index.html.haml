@@ -1,9 +1,9 @@
 .page-header
-  %h1 Artists
+  = navigation(:class => "pills pull-right", :namespace => :scope) do |n|
+    - n.default link_to "All", artists_path
+    - n.favorited link_to "Favorited", artists_path(:scope => :favorited)
 
-= navigation(:class => :pills, :namespace => :scope) do |n|
-  - n.default link_to "All", artists_path
-  - n.favorited link_to "Favorited", artists_path(:scope => :favorited)
+  %h1 Artists
 
 = form_for(@search, :url => collection_path, :html => {:class => "well form-stacked"}) do |f|
   %fieldset
