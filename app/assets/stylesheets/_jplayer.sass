@@ -1,0 +1,128 @@
+.jp-audio
+  height: 100%
+  .jp-interface
+    +clearfix
+    margin: 20px 0
+
+    .jp-toggles
+      display: none
+
+    ul.jp-controls
+      +clearfix
+      +horizontal-list(0)
+      +single-box-shadow(rgba(0, 0, 0, 0.5), 0, 0, 4px, 0, inset)
+      +border-radius(5px)
+      background-color: rgba(0, 0, 0, 0.1)
+      padding: 8px
+
+      li
+        a
+          +border-radius(5px)
+          +single-box-shadow(rgba(0, 0, 0, 0.5), 0, 1px, 4px, 0)
+          +background-image(linear-gradient(#fbfbfb, #e4e4e4))
+          +single-text-shadow(rgba(255, 255, 255, 1), 0, 1px, 0)
+          display: block
+          width: 24px
+          height: 24px
+          line-height: 22px
+          text-align: center
+          background-position: 50% 50%
+          background-repeat: no-repeat
+          color: #444
+          margin: 0 3px
+
+          .iconic
+            font-size: 9px
+
+          &:hover
+            text-decoration: none
+            +background-image(linear-gradient(#fbfbfb, #d7d7d7))
+            color: #0069D6
+
+
+    .jp-progress
+      +clearfix
+      +single-box-shadow(rgba(0, 0, 0, 0.5), 0, 0, 4px, 0, inset)
+      +border-radius(5px)
+      margin: 0
+      padding: 0
+      width: 100%
+      height: 20px
+      overflow: hidden
+      background-color: rgba(0, 0, 0, 0.1)
+
+      .jp-seek-bar, .jp-play-bar
+        +border-radius(5px)
+        height: 100%
+        cursor: pointer
+        overflow: hidden
+
+      .jp-seek-bar
+        background-color: rgba(0, 0, 0, 0.10)
+
+      .jp-play-bar
+        background-color: rgba(0, 0, 0, 0.25)
+
+    .jp-time-holder
+      +clearfix
+      font-size: 11px
+      padding: 2px 8px
+
+      .jp-current-time
+        float: left
+      .jp-duration
+        float: right
+
+
+  .jp-playlist
+    +clearfix
+    background-color: white
+    +box-shadow(0px 0px 5px rgba(0,0,0,0.5))
+    +border-radius(5px)
+
+    ul
+      +no-bullets
+      margin: 0
+      padding: 0
+      overflow-y: scroll
+
+      li
+        float: none
+        border-bottom: 1px solid #eee
+
+        &:hover
+          background-color: #eee
+          &.jp-playlist-current
+            background-color: #3C3C3C
+
+        &.jp-playlist-current
+          background-color: #3C3C3C
+
+          a
+            color: white
+
+
+        div
+          +clearfix
+          .jp-playlist-item-remove
+            float: right
+
+          .jp-playlist-item
+            flaot: left
+            display: block
+            +ellipsis
+            font-weight: bold
+
+            .jp-artist
+              display: block
+              color: #aaa
+              font-weight: normal
+
+          a
+            color: #444
+            text-shadow: none
+            padding: 4px 8px
+
+            &:hover
+              text-decoration: none
+

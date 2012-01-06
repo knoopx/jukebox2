@@ -5,7 +5,7 @@
   .span4
     %p= image_tag(resource.image_url) unless resource.image_url.blank?
     %p
-      = link_to "&#9658;".html_safe, "#", :class => "btn success", "data-play-artist" => resource.id
+      = play_button([resource, :tracks])
       = favorite_button(resource)
 
     %strong Listeners
@@ -34,7 +34,7 @@
 
         .artwork
           = link_to image_tag((release.image_url.blank? ? "cd_case.png" : release.image_url), :witdh => 100, :height => 100), release
-          = link_to("&#9658;".html_safe, "#", :class => "btn success", "data-play-tracks" => release.track_ids.to_json)
+          = play_button([release, :tracks])
 
         .tracks
           %ol
@@ -51,5 +51,8 @@
 .grid
   - resource.similar.map do |artist|
     .artist
-      .image= image_tag(artist.image_url)
+      .image
+        = image_tag(artist.image_url)
+        = link_to(iconic("e048"), [artist, :tracks], "data-play" => true)
+
       .name= link_to(artist.name, artist_path(artist))

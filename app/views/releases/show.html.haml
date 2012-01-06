@@ -7,7 +7,7 @@
   .span4
     %h3 Information
     = link_to image_tag((resource.image_url.blank? ? "cd_case.png" : resource.image_url), :witdh => 100, :height => 100), resource
-    = link_to("&#9658;".html_safe, "#", :class => "btn success", "data-play-tracks" => resource.track_ids.to_json)
+    = play_button([resource, :tracks])
     = favorite_button(resource)
 
     %h3 Tracks

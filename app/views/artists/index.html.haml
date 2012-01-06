@@ -31,7 +31,7 @@
         %td= resource.listeners
         %td= time_ago_in_words(resource.created_at)
         %td
-          = link_to "&#9658;".html_safe, nil, :class => "btn success", "data-play-artist" => resource.id
+          = play_button([resource, :tracks])
           = favorite_button(resource)
 
 = paginate(collection)

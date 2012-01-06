@@ -1,0 +1,40 @@
+#jquery_jplayer.jp-jplayer
+
+#jp_container.jp-audio
+  .jp-type-playlist
+    .jp-gui.jp-interface
+      %ul.jp-controls
+        %li
+          %a.jp-play{:href => "javascript:;"}
+            %span.iconic &#xe047;
+        %li
+          %a.jp-pause{:href => "javascript:;"}
+            %span.iconic &#xe049;
+        %li
+          %a.jp-previous{:href => "javascript:;"}
+            %span.iconic &#xe04c;
+        %li
+          %a.jp-next{:href => "javascript:;"}
+            %span.iconic &#xe04d;
+
+      .jp-time-holder
+        .jp-current-time
+        .jp-duration
+
+      .jp-progress
+        .jp-seek-bar
+          .jp-play-bar
+
+      %ul.jp-toggles
+        %li
+          %a.jp-shuffle{:href => "javascript:;", :title => "shuffle"} Shuffle
+        %li
+          %a.jp-shuffle-off{:href => "javascript:;", :title => "shuffle off"} Shuffle off
+        %li
+          %a.jp-repeat{:href => "javascript:;", :title => "repeat"} Repeat
+        %li
+          %a.jp-repeat-off{:href => "javascript:;", :title => "repeat off"} Repeat off
+
+    .jp-playlist
+      %ul
+        %li

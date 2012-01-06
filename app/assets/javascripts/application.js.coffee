@@ -1,34 +1,37 @@
 #= require jquery
 #= require jquery_ujs
 #= require jquery.pjax
-#= require soundmanager2
 #= require twitter/bootstrap
 #= require_tree .
 #= require_self
 
-soundManager.url = "/swf/"
-soundManager.flashVersion = 9
-soundManager.useFlashBlock = false
-soundManager.onready ->
-  AudioPlayer.init()
-
 $ ->
     $.pjax.defaults.timeout = 30000
-    $("a:not([data-play-tracks], [data-play-artist], [data-remote])").pjax "body > .container > .content"
+    $("a:not([data-play], [data-remote])").pjax "body > .container-fluid > .content"
 
     $('form[method=get]:not([data-remote])').live 'submit', (event) ->
       event.preventDefault()
       $.pjax
-        container: "body > .container > .content"
+        container: "body > .container-fluid > .content"
         url: this.action + '?' + $(this).serialize()
 
-    $("a[data-play-artist]").live 'click', (e) ->
+    $("a[data-play]").live 'click', (e) ->
       e.preventDefault()
-      artist_id = $(this).data("play-artist")
-      tracks = $.getJSON "/tracks", { artist_id: artist_id }, (response) ->
-        AudioPlayer.playTracks($.map(response, (item) -> item.id))
+      AudioPlayer.playTracks($(this).attr("href"))
 
-    $("a[data-play-tracks]").live 'click', (e) ->
-      e.preventDefault()
-      AudioPlayer.playTracks($(this).data("play-tracks"))
+    window.Playlist = new jPlayerPlaylist(
+      jPlayer: "#jquery_jplayer",
+      cssSelectorAncestor: "#jp_container",
+      [],
+      playlistOptions:
+        autoPlay: true,
+        enableRemoveControls: true
+      ,
+      swfPath: "/swf/",
+      supplied: "mp3",
+      wmode: "window"
+    )
 
+    $window = $(window)
+    $playlist = $(".jp-playlist ul")
+    $playlist.css("max-height", $window.height() - $playlist.offset().top - 10)

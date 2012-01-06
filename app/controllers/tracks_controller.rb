@@ -2,6 +2,7 @@ class TracksController < ApplicationController
   respond_to :json
 
   belongs_to :artist, :optional => true
+  belongs_to :release, :optional => true
 
   def show
     render :json => {
@@ -9,6 +10,17 @@ class TracksController < ApplicationController
         :title => resource.title,
         :artist => (resource.artist.name rescue resource.release.artists.map(&:name).to_sentence),
         :stream_uri => play_track_path(resource)
+    }
+  end
+
+  def index
+    render :json => collection.map { |resource|
+      {
+          :id => resource.id,
+          :title => resource.title,
+          :artist => (resource.artist.name rescue resource.release.artists.map(&:name).to_sentence),
+          :stream_uri => play_track_path(resource)
+      }
     }
   end
 

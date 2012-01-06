@@ -15,7 +15,10 @@ Jukebox2::Application.routes.draw do
 
   resources :releases do
     get :toggle_favorite, :on => :member
+    resources :tracks
   end
+
+  resources :sources
 
   root :to => "frontpage#index"
 end
