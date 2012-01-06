@@ -2,18 +2,16 @@
   height: 100%
   .jp-interface
     +clearfix
-    margin: 20px 0
-
-    .jp-toggles
-      display: none
+    +single-box-shadow(rgba(0, 0, 0, 0.5), 0, 0, 4px, 0, inset)
+    +border-radius(5px)
+    background-color: rgba(0, 0, 0, 0.1)
+    padding: 8px
+    margin: 10px 0
 
     ul.jp-controls
       +clearfix
       +horizontal-list(0)
-      +single-box-shadow(rgba(0, 0, 0, 0.5), 0, 0, 4px, 0, inset)
-      +border-radius(5px)
-      background-color: rgba(0, 0, 0, 0.1)
-      padding: 8px
+      padding: 4px 0
 
       li
         a
@@ -39,12 +37,23 @@
             +background-image(linear-gradient(#fbfbfb, #d7d7d7))
             color: #0069D6
 
+          &.jp-repeat, &.jp-repeat-off, &.jp-shuffle, &.jp-shuffle-off
+            line-height: 24px
+            .iconic
+              font-size: 12px
+
+          &.jp-repeat, &.jp-repeat-off
+            line-height: 26px
+
+          &.jp-repeat, &.jp-shuffle
+            +background-image(linear-gradient(#e4e4e4, #fbfbfb))
+            +box-shadow(rgba(0, 0, 0, 0.75) 0 0 1px 0, rgba(0, 0, 0, 0.25) 0 1px 2px 0 inset)
 
     .jp-progress
       +clearfix
       +single-box-shadow(rgba(0, 0, 0, 0.5), 0, 0, 4px, 0, inset)
       +border-radius(5px)
-      margin: 0
+      margin: 4px 0
       padding: 0
       width: 100%
       height: 20px
@@ -66,7 +75,7 @@
     .jp-time-holder
       +clearfix
       font-size: 11px
-      padding: 2px 8px
+      padding: 0 4px
 
       .jp-current-time
         float: left

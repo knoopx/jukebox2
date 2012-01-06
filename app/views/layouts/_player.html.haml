@@ -3,6 +3,14 @@
 #jp_container.jp-audio
   .jp-type-playlist
     .jp-gui.jp-interface
+      .jp-time-holder
+        .jp-current-time
+        .jp-duration
+
+      .jp-progress
+        .jp-seek-bar
+          .jp-play-bar
+
       %ul.jp-controls
         %li
           %a.jp-play{:href => "javascript:;"}
@@ -17,23 +25,17 @@
           %a.jp-next{:href => "javascript:;"}
             %span.iconic &#xe04d;
 
-      .jp-time-holder
-        .jp-current-time
-        .jp-duration
+        %li
+          %a.jp-repeat{:href => "javascript:;", :title => "repeat"}= iconic("e032")
 
-      .jp-progress
-        .jp-seek-bar
-          .jp-play-bar
+        %li
+          %a.jp-repeat-off{:href => "javascript:;", :title => "repeat off"}= iconic("e032")
 
-      %ul.jp-toggles
         %li
-          %a.jp-shuffle{:href => "javascript:;", :title => "shuffle"} Shuffle
+          %a.jp-shuffle{:href => "javascript:;", :title => "shuffle"}= iconic("e046")
+
         %li
-          %a.jp-shuffle-off{:href => "javascript:;", :title => "shuffle off"} Shuffle off
-        %li
-          %a.jp-repeat{:href => "javascript:;", :title => "repeat"} Repeat
-        %li
-          %a.jp-repeat-off{:href => "javascript:;", :title => "repeat off"} Repeat off
+          %a.jp-shuffle-off{:href => "javascript:;", :title => "shuffle off"}= iconic("e046")
 
     .jp-playlist
       %ul
