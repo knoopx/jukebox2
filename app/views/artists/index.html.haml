@@ -1,14 +1,14 @@
 .page-header
   %h1 Artists
 
-  = navigation(:class => :pills, :namespace => :scope) do |n|
-    - n.default link_to "All", artists_path
-    - n.favorited link_to "Favorited", artists_path(:scope => :favorited)
+= navigation(:class => :pills, :namespace => :scope) do |n|
+  - n.default link_to "All", artists_path
+  - n.favorited link_to "Favorited", artists_path(:scope => :favorited)
 
-  = form_for(@search, :url => collection_path, :html => {:class => "form-stacked"}) do |f|
-    %fieldset
-      = f.label :name_like
-      = f.text_field :name_like
+= form_for(@search, :url => collection_path, :html => {:class => "well form-stacked"}) do |f|
+  %fieldset
+    = f.label :name_like
+    = f.text_field :name_like
 
 %table
   %thead
