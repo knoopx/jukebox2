@@ -64,6 +64,15 @@ class Artist < ActiveRecord::Base
     update_attribute :similar_mbids, response["similarartists"]["artist"].map { |a| a["mbid"] }.reject(&:blank?)
   end
 
+  class << self
+    def reset_counters!
+      transaction do
+        self.find_each do |artist|
+          self.reset_counters(artist.id, :tracks)
+        end
+      end
+    end
+  end
   protected
 
   def normalize_name
