@@ -16,16 +16,15 @@ gem 'has_scope'
 gem 'inherited_resources'
 gem 'haml-rails'
 gem 'formtastic'
-gem 'compass', :git => "git://github.com/chriseppstein/compass.git"
+gem 'compass', :git => 'git://github.com/chriseppstein/compass.git'
 gem 'jquery-rails'
 gem 'prototype-rails'
 gem 'twitter-bootstrap-rails'
 gem 'twitter_bootstrap_form_for'
 gem 'capistrano'
-gem 'spawn'
 
-gem "ruby-taglib2", :require => "taglib2"
-gem "babosa"
+gem 'ruby-taglib2', :require => 'taglib2'
+gem 'babosa'
 gem 'hpricot'
 gem 'nokogiri'
 gem 'nestful'
