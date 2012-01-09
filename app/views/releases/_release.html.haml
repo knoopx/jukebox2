@@ -20,4 +20,6 @@
               = track.title
               %small= link_to track.artist.name, artist_path(track.artist)
             %td.length= formatted_length track.length
-            %td.actions= favorite_link(track)
+            %td.actions
+              = play_link(track)
+              = favorite_link(track)

@@ -1,11 +1,10 @@
 @AudioPlayer =
   playTracks: (uri) ->
     AudioPlayer.getTracks uri, (tracks) ->
-      Playlist.setPlaylist tracks.map (track) ->
-        title: track.title, artist: track.artist, mp3: track.stream_uri
+      Playlist.setPlaylist(tracks)
 
   enqueueTrack: (track) ->
-    Playlist.add title: track.title, artist: track.artist, mp3: track.stream_uri
+    Playlist.add(track)
 
   getTracks: (uri, callback) ->
     $.getJSON uri, (response) -> callback(response)

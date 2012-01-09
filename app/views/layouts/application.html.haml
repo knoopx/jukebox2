@@ -13,11 +13,13 @@
           %ul.nav
             %li= link_to "Artists", artists_path
             %li= link_to "Releases", releases_path
+            %li= link_to "Tracks", tracks_path
             %li= link_to "Sources", sources_path
 
-          = semantic_form_for(:search, :url => artists_path, :method => :get, :html => {:class => "pull-right"}) do |f|
-            = f.inputs do
-              %li= f.text_field :name_like
+          = form_for(:search, :url => tracks_path, :method => :get, :html => {:class => "pull-right"}) do |f|
+            %fieldset.inputs
+              %ol
+                %li= text_field_tag "search[title_or_artist_name_or_release_name_like]"
 
     .container
       .content= yield

@@ -1,29 +1,44 @@
 class TracksController < ApplicationController
   include Jukebox2::Favorites::ControllerMethods
-
-  respond_to :json
-
   belongs_to :artist, :optional => true
   belongs_to :release, :optional => true
 
+  apply_filter_scopes
+  search
+  paginate
+
   def show
-    render :json => {
-        :id => resource.id,
-        :title => resource.title,
-        :artist => (resource.artist.name rescue resource.release.artists.map(&:name).to_sentence),
-        :stream_uri => play_track_path(resource)
-    }
+    respond_to do |format|
+      format.json do
+        render :json => [
+            {
+                :title => resource.title,
+                :artist => resource.artist.name,
+                :artist_url => artist_url(resource.artist),
+                :release_url => release_url(resource.release),
+                :mp3 => play_track_url(resource)
+            }
+        ]
+      end
+    end
   end
 
   def index
-    render :json => collection.map { |resource|
-      {
-          :id => resource.id,
-          :title => resource.title,
-          :artist => (resource.artist.name rescue resource.release.artists.map(&:name).to_sentence),
-          :stream_uri => play_track_path(resource)
-      }
-    }
+    respond_to do |format|
+      format.html { index! }
+      format.json do
+        response = collection.map do |resource|
+          {
+              :title => resource.title,
+              :artist => resource.artist.name,
+              :artist_url => artist_url(resource.artist),
+              :release_url => release_url(resource.release),
+              :mp3 => play_track_url(resource)
+          }
+        end
+        render :json => response
+      end
+    end
   end
 
   def play
