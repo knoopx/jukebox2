@@ -1,0 +1,36 @@
+pre#description
+  margin: 0 auto
+  font-family: "Courier New", monospace
+  font-size: 12px
+  line-height: 12px
+
+.release
+  +clearfix
+  +embossed-separator
+
+  .artwork, .tracks
+    float: left
+
+  .tracks
+    width: 75%
+
+  .artwork
+    +clearfix
+    width: 25%
+    overflow: visible
+
+    .image
+      float: left
+      width: 100px
+      margin-right: 10px
+
+      img
+        +shadow
+
+    .meta
+      float: left
+      width: 180px
+
+      .title
+        font-weight: bold
+        color: $text-emphasis-color

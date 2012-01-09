@@ -1,0 +1,150 @@
++font-face("Iconic Fill", font-files("/typefaces/iconic_fill.otf", opentype, "/typefaces/iconic_fill.ttf", truetype), "/typefaces/iconic_fill.eot")
+
+.iconic
+  font-family: "Iconic Fill"
+  font-size: 12px
+  font-height: 12px
+
+.pull-right
+  float: right
+
+.span-one-third
+  float: left
+  width: 33%
+
+.wrapper
+  +clearfix
+  padding: 10px
+
+nav.pagination
+  +inset-shadow
+  padding: 4px 8px
+
+  span
+    display: inline-block
+    padding: 4px 8px
+
+.panel
+  +drop-shadow
+  overflow: hidden
+  border-radius: 4px
+  margin-bottom: 15px
+
+  h2
+    +background-gradient
+    +drop-shadow
+    font-size: 14px
+    font-weight: bold
+    padding: 8px
+    line-height: 16px
+
+  ul
+    +no-bullets
+    margin: 0
+    padding: 0
+
+    li
+      +embossed-separator
+      white-space: nowrap
+      padding: 4px 8px
+
+.page-header
+  +clearfix
+  +drop-shadow
+  +background-gradient
+  padding: 10px
+
+  strong
+    color: $text-emphasis-color
+    font-weight: bold
+    font-size: 16px
+    margin: 0 10px
+
+a.button
+  +button
+  &.unfavorite
+    color: red
+  &.play, &.enqueue, &.favorite, &.unfavorite
+    +border-radius(5px)
+    +drop-shadow
+    +background-gradient
+    display: inline-block
+    padding: 4px 8px
+    line-height: 12px
+
+ul.pills
+  +horizontal-list(2px)
+
+  li
+    +border-radius(10px)
+
+    &.active
+      background-color: alpha-black(0.1)
+      +inset-drop-shadow
+
+    a
+      color: $text-color
+      display: block
+      padding: 4px 12px
+      &:hover
+        color: $text-emphasis-color
+        text-decoration: none
+
+
+.grid
+  +clearfix
+  .artist
+    float: left
+    text-align: center
+    width: 75px
+    margin-right: 10px
+    margin-bottom: 10px
+    height: 120px
+
+    .image
+      position: relative
+      width: 75px
+      height: 75px
+      overflow: hidden
+      margin-bottom: 5px
+
+      img
+        +shadow
+        width: 75px
+        height: auto
+
+      a
+        display: block
+        position: absolute
+        top: 0
+        left: 0
+        width: 75px
+        height: 75px
+        line-height: 75px
+        color: $text-emphasis-color
+
+        .iconic
+          background: alpha-black(0.75)
+          display: none
+          font-size: 32px
+
+        &:hover
+          text-decoration: none
+
+          .iconic
+            display: inherit
+
+    a
+      display: block
+      +ellipsis
+
+.genres
+  display: inline
+
+  a
+    +border-radius(5px)
+    display: inline-block
+    background-color: alpha-black(0.1)
+    font-size: 11px
+    padding: 3px 6px
+    color: $text-color

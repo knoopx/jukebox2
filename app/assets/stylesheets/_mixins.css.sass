@@ -1,0 +1,65 @@
+@function alpha-white($opacity: 0.5)
+  @return rgba(255, 255, 255, $opacity)
+
+@function alpha-black($opacity: 0.5)
+  @return rgba(0, 0, 0, $opacity)
+
+=text-emboss
+  @if $dark-theme
+    +text-shadow(1px 1px 0 alpha-black(0.5))
+  @else
+    +text-shadow(1px 1px 0 alpha-white(0.5))
+
+=text-bevel
+  +text-shadow(-1px -1px 0 alpha-black(0.5))
+
+=background-gradient($brightness: 0.2)
+  @if $dark-theme
+    +background-image(linear-gradient(alpha-white($brightness), alpha-black(0)))
+  @else
+    +background-image(linear-gradient(alpha-black(0), alpha-black($brightness)))
+
+=shadow($opacity: 0.25, $extend: 4px)
+  +box-shadow(0 0 0 1px alpha-black($opacity), 0 0 $extend alpha-black($opacity))
+
+=inset-shadow($opacity: 0.25, $extend: 4px)
+  +box-shadow(0 0 0 1px alpha-black($opacity), 0 0 $extend alpha-black($opacity) inset)
+
+=drop-shadow($opacity: 0.25, $extend: 2px)
+  +box-shadow(0 0 0 1px alpha-black($opacity), 0 2px $extend 0 alpha-black($opacity))
+
+=inset-drop-shadow($opacity: 0.25, $extend: 2px)
+  +box-shadow(0 0 0 1px alpha-black($opacity), 0 2px $extend alpha-black($opacity) inset)
+
+=embossed-separator
+  &:not(:last-child)
+    border-bottom: 1px solid alpha-black(0.1)
+    +box-shadow(0 -1px 0 alpha-white(0.05) inset)
+
+=button
+  +border-radius(5px)
+  +drop-shadow
+  +background-gradient
+  color: $text-color
+
+  &:hover
+    +background-gradient(0.3)
+    text-decoration: none
+    color: $primary-color
+
+
+=button-off
+  +background-gradient
+  +inset-drop-shadow
+
+=zebra-stripe
+  @if $dark-theme
+    &:nth-child(2n)
+      background-color: alpha-white(0.02)
+    &:hover
+      background-color: alpha-white(0.1)
+  @else
+    &:nth-child(2n)
+      background-color: alpha-black(0.02)
+    &:hover
+      background-color: alpha-black(0.1)

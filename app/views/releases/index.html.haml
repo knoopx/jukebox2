@@ -2,26 +2,30 @@
   = navigation(:class => "pills pull-right", :namespace => :scope) do |n|
     - n.default link_to "All", releases_path
     - n.favorited link_to "Favorited", releases_path(:scope => :favorited)
-  %h1 Releases
+  %strong Releases
 
 
-= form_for(@search, :url => collection_path, :html => {:class => "well form-stacked"}) do |f|
-  %fieldset
-    = f.label :name_like
-    = f.text_field :name_like
+.wrapper
+  = semantic_form_for(@search, :url => collection_path) do |f|
+    = f.inputs do
+      = f.input :name_like
+      = f.submit "Search"
 
 %table
   %thead
     %tr
-      %th Name
+      %th= sort_link(@search, :name)
       %th= sort_link(@search, :tracks_count)
       %th= sort_link(@search, :created_at)
+      %th{:width => 30}
   %tbody
     - collection.each do |resource|
       %tr
-        %td
-          %span= link_to resource.name, resource
+        %td= link_to resource.name, resource, :class => "title"
         %td= resource.tracks_count
         %td= time_ago_in_words resource.created_at
+        %td
+          = play_link([resource, :tracks])
+          = favorite_link(resource)
 
 = paginate(collection)

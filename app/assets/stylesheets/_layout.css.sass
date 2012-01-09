@@ -1,0 +1,39 @@
+.topbar
+  +clearfix
+  +shadow
+  +background-gradient
+  top: 0
+  left: 0
+  right: 0
+  height: 40px
+  line-height: 40px
+  position: fixed
+  padding: 0 10px
+  background-color: darken($background-color, 10)
+  z-index: 10
+
+  a.brand
+    float: left
+    font-size: 14px
+    font-weight: bold
+    margin-right: 20px
+    color: $text-emphasis-color
+
+  ul.nav
+    +horizontal-list(4px)
+    float: left
+
+    a
+      color: $text-color
+
+.container > .content
+  +inset-shadow
+  background-color: lighten($background-color, 5)
+  margin-right: 300px
+  overflow-x: hidden
+  overflow-y: auto
+  position: fixed
+  top: 40px
+  bottom: 0
+  left: 0
+  right: 0

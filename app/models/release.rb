@@ -8,6 +8,8 @@ class Release < ActiveRecord::Base
   before_create :process_release
   after_create :update_metadata
 
+  serialize :images, Hash
+
   scope :recent, lambda { |limit| order(:created_at.desc).limit(limit) }
 
   def process_release
@@ -50,8 +52,20 @@ class Release < ActiveRecord::Base
     true
   end
 
+  def artist
+    self.artists.first
+  end
+
+  def compilation?
+    self.artists.size > 1
+  end
+
   def description_file
     Dir.glob(File.join(self.path, "*.nfo")).first
+  end
+
+  def image_url(format = :large)
+    self.images[format]
   end
 
   def playlist_uri
@@ -73,7 +87,7 @@ class Release < ActiveRecord::Base
 
     if album = response["album"]
       update_attributes :mbid => album["mbid"],
-                        :image_url => album["image"].last["#text"],
+                        :images => album["image"].each_with_object({}) { |image, hash| hash[image["size"].to_sym] = image["#text"] },
                         :lastfm_url => album["url"],
                         :listeners => album["listeners"],
                         :play_count => album["playcount"],

@@ -1,29 +1,14 @@
 .page-header
-  %h1
-    = resource.title
-    %small= raw resource.artists.map{|a| link_to a.name, a}.to_sentence
+  %strong= resource.title
+  %small= raw resource.artists.map{|a| link_to a.name, a}.to_sentence
 
-.row
-  .span4
-    %h3 Information
-    = link_to image_tag((resource.image_url.blank? ? "cd_case.png" : resource.image_url), :witdh => 100, :height => 100), resource
-    = play_button([resource, :tracks])
-    = favorite_button(resource)
+= render resource
 
-    %h3 Tracks
-    %ol
-      - resource.tracks.map do |track|
-        %li
-          - if resource.various_artists? and track.artist
-            = link_to track.artist.name, artist_path(track.artist)
-            \-
-          = link_to track.title, "#", :id => dom_id(track), :class => "track", "data-play-tracks" => [track.id].to_json
+.page-header
+  %strong Description
 
-  .span12
-    %h2 Description
-    - if resource.description_file
-      %pre#description= Iconv.new('UTF-8', 'IBM437').conv(File.open(resource.description_file, "rb").read)
-    - else
-      %em No description
-
-
+.wrapper
+  - if resource.description_file
+    %pre#description= Iconv.new('UTF-8', 'IBM437').conv(File.open(resource.description_file, "rb").read)
+  - else
+    %em No description

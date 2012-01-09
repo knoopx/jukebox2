@@ -1,37 +1,38 @@
 .page-header
   = navigation(:class => "pills pull-right", :namespace => :scope) do |n|
     - n.default link_to "All", artists_path
-    - n.favorited link_to "Favorited", artists_path(:scope => :favorited)
+    - n.favorited link_to (iconic("2764") + " Favorited"), artists_path(:scope => :favorited)
 
-  %h1 Artists
+  %strong Artists
 
-= form_for(@search, :url => collection_path, :html => {:class => "well form-stacked"}) do |f|
-  %fieldset
-    = f.label :name_like
-    = f.text_field :name_like
+.wrapper
+  = semantic_form_for(@search, :url => collection_path) do |f|
+    = f.inputs do
+      = f.input :name_like
+      = f.input :genres_name_in
+      = f.submit "Search"
 
 %table
   %thead
     %tr
-      %th Name
+      %th= sort_link(@search, :name)
       %th Genres
       %th= sort_link(@search, :tracks_count)
       %th= sort_link(@search, :play_count)
       %th= sort_link(@search, :listeners)
       %th= sort_link(@search, :created_at)
-      %th{:width => 120}
+      %th
   %tbody
     - collection.each do |resource|
       %tr
-        %td
-          %span= link_to resource.name, resource
-        %td= raw resource.genres.take(10).map { |genre| link_to genre.name, genre_artists_path(genre) }.to_sentence
+        %td= link_to resource.name, resource, :class => "title"
+        %td= raw resource.genres.take(10).map { |genre| link_to genre.name, artists_path(:search => {:genres_name_in => genre.name}) }.to_sentence
         %td= resource.tracks_count
         %td= resource.play_count
         %td= resource.listeners
         %td= time_ago_in_words(resource.created_at)
-        %td
-          = play_button([resource, :tracks])
-          = favorite_button(resource)
+        %td.actions
+          = play_link([resource, :tracks])
+          = favorite_link(resource)
 
 = paginate(collection)

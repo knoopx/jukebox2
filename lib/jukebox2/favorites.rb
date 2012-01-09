@@ -25,7 +25,7 @@ module Jukebox2
           resource.update_attribute(:favorited_at, nil)
         end
 
-        render(:update) { |page| page["##{dom_id(resource, :favorite)}"].replaceWith(favorite_button(resource)) }
+        render(:update) { |page| page["##{dom_id(resource, :favorite)}"].replaceWith(favorite_link(resource, params[:options])) }
       end
     end
   end

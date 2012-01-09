@@ -1,0 +1,50 @@
+form
+  font-size: 13px
+
+  fieldset
+    ol
+      +clearfix
+      margin-bottom: 10px
+
+  fieldset.inputs
+    ol
+      li
+        display: inline-block
+        margin-right: 5px
+
+        label
+          display: block
+          line-height: 20px
+          font-weight: bold
+
+        input, textarea, select
+          +border-radius(3px)
+          border: none
+          margin: 1px
+          background-color: transparent
+          display: inline-block
+          width: 210px
+          height: 18px
+          line-height: 18px
+          padding: 4px
+
+        input, textarea
+          +transition(border 0.2s linear 0s, box-shadow 0.2s linear 0s)
+          +inset-drop-shadow
+          color: $text-color
+
+          &:focus
+            border-color: rgba(82, 168, 236, 0.8)
+            +box-shadow(0 1px 3px alpha-black(0.5) inset, 0 0 0 1px rgba(82, 168, 236, 0.6))
+            outline: 0 none
+
+  input[type="submit"]
+    +border-radius(5px)
+    +shadow
+    +background-gradient
+    border: none
+    background-color: transparent
+    color: $text-color
+    display: inline-block
+    padding: 4px 8px
+    line-height: 12px

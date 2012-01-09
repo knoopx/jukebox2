@@ -8,17 +8,17 @@
   %body
     .topbar
       .fill
-        .container-fluid
+        .container
           = link_to "Jukebox2", root_path, :class => "brand"
           %ul.nav
             %li= link_to "Artists", artists_path
             %li= link_to "Releases", releases_path
             %li= link_to "Sources", sources_path
 
-          = form_for(:search, :url => artists_path, :method => :get, :html => {:class => "pull-right"}) do |f|
-            = f.text_field :name_like
+          = semantic_form_for(:search, :url => artists_path, :method => :get, :html => {:class => "pull-right"}) do |f|
+            = f.inputs do
+              %li= f.text_field :name_like
 
-    .container-fluid
-      .sidebar= render "layouts/player"
-
+    .container
       .content= yield
+      = render "layouts/player"

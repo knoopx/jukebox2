@@ -1,58 +1,27 @@
 .page-header
-  %h1= resource.name
-
-.row
-  .span4
-    %p= image_tag(resource.image_url) unless resource.image_url.blank?
-    %p
-      = play_button([resource, :tracks])
-      = favorite_button(resource)
-
-    %strong Listeners
+  .pull-right
     = resource.listeners
-    %br
-    %strong Play Count
-    = resource.play_count
-    %br
-    = link_to "Last.fm", resource.lastfm_url
+    listeners on
+    = link_to "last.fm", resource.lastfm_url
 
-    %h3 Tags
-    %ul
-      - resource.genres.each do |genre|
-        %li= link_to genre.name, genre_artists_path(genre)
+  %strong= resource.name
+  = play_link([resource, :tracks], :class => "button")
+  = favorite_link(resource, :class => "button")
+  .genres= raw resource.genres.map { |genre| link_to genre.name, artists_path(:search => {:genres_name_in => genre.name}) }.join("&nbsp;")
 
-  .span12
-    %h2 Description
-    = simple_format(resource.summary)
+.releases
+  - resource.releases.each do |release|
+    = render release
 
-    %h2 Releases
-    - resource.releases.each do |release|
-      = div_for(release) do
-        %h3
-          = link_to release.title, release
-          %small= release.year
+.page-header
+  %strong Similar Artists
 
-        .artwork
-          = link_to image_tag((release.image_url.blank? ? "cd_case.png" : release.image_url), :witdh => 100, :height => 100), release
-          = play_button([release, :tracks])
+.wrapper
+  .grid
+    - resource.similar.map do |artist|
+      .artist
+        .image
+          = image_tag(artist.image_url)
+          = link_to(iconic("e048"), [artist, :tracks], "data-play" => true)
 
-        .tracks
-          %ol
-            - release.tracks.map do |track|
-              %li
-                - if release.various_artists? and track.artist
-                  = link_to track.artist.name, artist_path(track.artist)
-                  \-
-                = link_to track.title, "#", :id => dom_id(track), :class => "track", "data-play-tracks" => [track.id].to_json
-
-%hr
-
-%h2 Similar Artists
-.grid
-  - resource.similar.map do |artist|
-    .artist
-      .image
-        = image_tag(artist.image_url)
-        = link_to(iconic("e048"), [artist, :tracks], "data-play" => true)
-
-      .name= link_to(artist.name, artist_path(artist))
+        .name= link_to(artist.name, artist_path(artist))

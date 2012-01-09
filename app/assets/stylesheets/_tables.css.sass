@@ -1,0 +1,32 @@
+table
+  width: 100%
+
+  .actions
+    width: 30px
+    text-align: right
+
+  .number
+    width: 20px
+    text-align: right
+
+  .length
+    width: 40px
+
+  td, th
+    padding: 4px 8px
+    .title
+      color: $text-emphasis-color
+      font-weight: bold
+
+  thead
+    tr
+      +text-emboss
+      +background-gradient
+      +drop-shadow
+
+      td, th
+        font-weight: bold
+
+  tbody
+    tr
+      +zebra-stripe

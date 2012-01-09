@@ -1,4 +1,6 @@
 class TracksController < ApplicationController
+  include Jukebox2::Favorites::ControllerMethods
+
   respond_to :json
 
   belongs_to :artist, :optional => true
@@ -37,12 +39,12 @@ class TracksController < ApplicationController
         'Content-Transfer-Encoding' => 'binary'
     )
 
-    if request.env['HTTP_RANGE'] =~ /bytes=(\d+)-(\d*)/ then
+    if request.env['HTTP_RANGE'] =~ /bytes=(\d+)-(\d*)/
       status_code = 206
       range_start, range_end = $1, $2
 
       if range_start.empty? and range_end.empty?
-        headers["Content-Length"] = "0"
+        headers["Content-Length"] = 0
         return render(:status => 416, :nothing => true)
       end
 

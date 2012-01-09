@@ -1,12 +1,13 @@
 .jp-audio
-  height: 100%
   .jp-interface
     +clearfix
-    +single-box-shadow(rgba(0, 0, 0, 0.5), 0, 0, 4px, 0, inset)
-    +border-radius(5px)
-    background-color: rgba(0, 0, 0, 0.1)
-    padding: 8px
-    margin: 10px 0
+    +background-gradient
+    position: fixed
+    top: 40px
+    right: 0
+    width: 280px
+    padding: 10px
+    height: 80px
 
     ul.jp-controls
       +clearfix
@@ -15,10 +16,7 @@
 
       li
         a
-          +border-radius(5px)
-          +single-box-shadow(rgba(0, 0, 0, 0.5), 0, 1px, 4px, 0)
-          +background-image(linear-gradient(#fbfbfb, #e4e4e4))
-          +single-text-shadow(rgba(255, 255, 255, 1), 0, 1px, 0)
+          +button
           display: block
           width: 24px
           height: 24px
@@ -26,16 +24,10 @@
           text-align: center
           background-position: 50% 50%
           background-repeat: no-repeat
-          color: #444
           margin: 0 3px
 
           .iconic
             font-size: 9px
-
-          &:hover
-            text-decoration: none
-            +background-image(linear-gradient(#fbfbfb, #d7d7d7))
-            color: #0069D6
 
           &.jp-repeat, &.jp-repeat-off, &.jp-shuffle, &.jp-shuffle-off
             line-height: 24px
@@ -46,19 +38,18 @@
             line-height: 26px
 
           &.jp-repeat-off, &.jp-shuffle-off
-            +background-image(linear-gradient(#e4e4e4, #fbfbfb))
-            +box-shadow(rgba(0, 0, 0, 0.75) 0 0 1px 0, rgba(0, 0, 0, 0.25) 0 1px 2px 0 inset)
+            +button-off
 
     .jp-progress
       +clearfix
-      +single-box-shadow(rgba(0, 0, 0, 0.5), 0, 0, 4px, 0, inset)
+      +inset-shadow
       +border-radius(5px)
       margin: 4px 0
       padding: 0
       width: 100%
       height: 20px
       overflow: hidden
-      background-color: rgba(0, 0, 0, 0.1)
+      background-color: alpha-black(0.1)
 
       .jp-seek-bar, .jp-play-bar
         +border-radius(5px)
@@ -67,10 +58,10 @@
         overflow: hidden
 
       .jp-seek-bar
-        background-color: rgba(0, 0, 0, 0.10)
+        background-color: alpha-black(0.10)
 
       .jp-play-bar
-        background-color: rgba(0, 0, 0, 0.25)
+        background-color: alpha-black(0.25)
 
     .jp-time-holder
       +clearfix
@@ -85,30 +76,34 @@
 
   .jp-playlist
     +clearfix
-    background-color: white
-    +box-shadow(0px 0px 5px rgba(0,0,0,0.5))
-    +border-radius(5px)
+    +shadow
 
     ul
       +no-bullets
+      position: fixed
+      top: 140px
+      bottom: 0
+      right: 0
+      width: 300px
       margin: 0
       padding: 0
       overflow-y: scroll
 
       li
         float: none
-        border-bottom: 1px solid #eee
+        +embossed-separator
 
         &:hover
-          background-color: #eee
+          background-color: alpha-white(0.05)
+
           &.jp-playlist-current
-            background-color: #3C3C3C
+            background-color: alpha-black(0.5)
 
         &.jp-playlist-current
-          background-color: #3C3C3C
+          background-color: alpha-black(0.5)
 
           a
-            color: white
+            color: $text-emphasis-color
 
 
         div
@@ -117,18 +112,16 @@
             float: right
 
           .jp-playlist-item
-            flaot: left
-            display: block
             +ellipsis
+            display: block
             font-weight: bold
 
             .jp-artist
-              display: block
-              color: #aaa
+              color: $text-color
               font-weight: normal
 
           a
-            color: #444
+            color: $text-emphasis-color
             text-shadow: none
             padding: 4px 8px
 

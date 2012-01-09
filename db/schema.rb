@@ -11,22 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111123141423) do
-
-  create_table "active_admin_comments", :force => true do |t|
-    t.integer  "resource_id",   :null => false
-    t.string   "resource_type", :null => false
-    t.integer  "author_id"
-    t.string   "author_type"
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "namespace"
-  end
-
-  add_index "active_admin_comments", ["author_type", "author_id"], :name => "index_active_admin_comments_on_author_type_and_author_id"
-  add_index "active_admin_comments", ["namespace"], :name => "index_active_admin_comments_on_namespace"
-  add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
+ActiveRecord::Schema.define(:version => 20120108202038) do
 
   create_table "artists", :force => true do |t|
     t.string   "name"
@@ -37,12 +22,12 @@ ActiveRecord::Schema.define(:version => 20111123141423) do
     t.string   "lastfm_url"
     t.integer  "listeners",       :default => 0
     t.integer  "play_count",      :default => 0
-    t.string   "image_url"
     t.text     "summary"
     t.text     "biography"
     t.text     "similar_mbids"
     t.datetime "favorited_at"
     t.integer  "tracks_count",    :default => 0
+    t.text     "images"
   end
 
   create_table "artists_releases", :id => false, :force => true do |t|
@@ -51,6 +36,12 @@ ActiveRecord::Schema.define(:version => 20111123141423) do
   end
 
   create_table "genres", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "labels", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -65,7 +56,6 @@ ActiveRecord::Schema.define(:version => 20111123141423) do
     t.datetime "updated_at"
     t.boolean  "various_artists", :default => false
     t.string   "mbid"
-    t.string   "image_url"
     t.string   "lastfm_url"
     t.string   "listeners"
     t.integer  "play_count",      :default => 0
@@ -74,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20111123141423) do
     t.date     "released_at"
     t.datetime "favorited_at"
     t.integer  "tracks_count",    :default => 0
+    t.text     "images"
   end
 
   create_table "sources", :force => true do |t|
@@ -106,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20111123141423) do
     t.string   "year"
     t.integer  "artist_id"
     t.integer  "local_play_count", :default => 0
+    t.datetime "favorited_at"
   end
 
 end
