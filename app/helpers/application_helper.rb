@@ -21,7 +21,7 @@ module ApplicationHelper
   end
 
   def enqueue_link(href, opts = {})
-    link_to iconic("2795"), href, opts.merge(:class => "enqueue", "data-enqueue" => true)
+    link_to iconic("2795"), href, opts.merge(:class => ["enqueue", opts[:class]].reject(&:blank?).join(" "), "data-enqueue" => true)
   end
 
   def formatted_length(seconds)

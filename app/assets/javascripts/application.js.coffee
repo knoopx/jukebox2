@@ -6,7 +6,7 @@
 
 $ ->
     $.pjax.defaults.timeout = 30000
-    $("a:not([data-play], [data-remote])").pjax "body > .container > .content"
+    $("a:not([data-play], [data-enqueue], [data-remote])").pjax "body > .container > .content"
 
     $('form[method=get]:not([data-remote])').live 'submit', (event) ->
       event.preventDefault()
@@ -17,6 +17,10 @@ $ ->
     $("a[data-play]").live 'click', (e) ->
       e.preventDefault()
       AudioPlayer.playTracks($(this).attr("href"))
+
+    $("a[data-enqueue]").live 'click', (e) ->
+      e.preventDefault()
+      AudioPlayer.enqueueTracks($(this).attr("href"))
 
     window.Playlist = new jPlayerPlaylist(
       jPlayer: "#jquery_jplayer",

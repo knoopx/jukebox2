@@ -30,6 +30,7 @@
         %td.date= time_ago_in_words(resource.created_at)
         %td.actions
           = play_link(resource)
+          = enqueue_link(resource)
           = favorite_link(resource)
 
 = paginate(collection)

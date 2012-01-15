@@ -17,15 +17,16 @@
       %th= sort_link(@search, :name)
       %th= sort_link(@search, :tracks_count)
       %th= sort_link(@search, :created_at)
-      %th{:width => 30}
+      %th
   %tbody
     - collection.each do |resource|
       %tr
         %td= link_to resource.name, resource, :class => "title"
         %td= resource.tracks_count
         %td= time_ago_in_words resource.created_at
-        %td
+        %td.actions
           = play_link([resource, :tracks])
+          = enqueue_link([resource, :tracks])
           = favorite_link(resource)
 
 = paginate(collection)

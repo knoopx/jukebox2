@@ -8,6 +8,7 @@
         .year= release.year
         %br
         = play_link([release, :tracks], :class => "button")
+        = enqueue_link([release, :tracks], :class => "button")
         = favorite_link(release, :class => "button")
 
   .tracks
@@ -22,4 +23,5 @@
             %td.length= formatted_length track.length
             %td.actions
               = play_link(track)
+              = enqueue_link(track)
               = favorite_link(track)
