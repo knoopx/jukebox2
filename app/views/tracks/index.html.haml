@@ -2,8 +2,9 @@
   = navigation(:class => "pills pull-right", :namespace => :scope) do |n|
     - n.default link_to "All", releases_path
     - n.favorited link_to "Favorited", releases_path(:scope => :favorited)
-  %strong Releases
-
+  %strong Tracks
+  = play_link(tracks_path(:search => @search.search_attributes), :class => "button")
+  = enqueue_link(tracks_path(:search => @search.search_attributes), :class => "button")
 
 .wrapper
   = semantic_form_for(@search, :url => collection_path) do |f|
