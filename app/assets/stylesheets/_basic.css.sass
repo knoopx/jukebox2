@@ -16,12 +16,12 @@ a
     text-decoration: underline
 
   &.play, &.enqueue, &.favorite, &.unfavorite
-    color: $text-emphasis-color
-    &:hover
-      text-decoration: none
+    color: #2f2f2f
+    +text-shadow(1px 1px 1px alpha-white(0.1))
 
-  &.favorite
-    color: alpha-black(0.25)
+    &:hover
+      color: $primary-color
+      text-decoration: none
 
   &.unfavorite
     color: red
