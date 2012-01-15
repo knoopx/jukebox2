@@ -68,15 +68,19 @@ class Artist < ActiveRecord::Base
   end
 
   def update_similar_artists
-    # http://ws.audioscrobbler.com/2.0/?api_key=b25b959554ed76058ac220b7b2e0a026&method=artist.getsimilar&artist=kidcrash
-    response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
-        :api_key => "b25b959554ed76058ac220b7b2e0a026",
-        :format => "json",
-        :method => "artist.getsimilar",
-        :artist => self.name
-    })
+    begin
+      # http://ws.audioscrobbler.com/2.0/?api_key=b25b959554ed76058ac220b7b2e0a026&method=artist.getsimilar&artist=kidcrash
+      response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
+          :api_key => "b25b959554ed76058ac220b7b2e0a026",
+          :format => "json",
+          :method => "artist.getsimilar",
+          :artist => self.name
+      })
 
-    update_attribute :similar_mbids, response["similarartists"]["artist"].map { |a| a["mbid"] }.reject(&:blank?)
+      update_attribute :similar_mbids, response["similarartists"]["artist"].map { |a| a["mbid"] }.reject(&:blank?)
+    rescue => e
+      puts e
+    end
   end
 
   class << self
