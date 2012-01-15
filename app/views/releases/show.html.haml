@@ -1,6 +1,6 @@
 .page-header
   %strong= resource.title
-  %small= raw resource.artists.map{|a| link_to a.name, a}.to_sentence
+  = raw resource.artists.map{|a| link_to a.name, a}.to_sentence
 
 = render resource
 
