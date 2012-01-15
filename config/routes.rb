@@ -14,7 +14,9 @@ Jukebox2::Application.routes.draw do
     resources :tracks
   end
 
-  resources :sources
+  resources :sources do
+    get :reindex, :on => :collection
+  end
 
   root :to => "frontpage#index"
 end

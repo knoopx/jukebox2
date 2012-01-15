@@ -2,16 +2,42 @@ require 'fileutils'
 
 module Jukebox2
   class Indexer
+    LOCK_FILE = Rails.root.join("tmp", "index.lock")
+
+    class Exception < ::Exception
+    end
+
     def initialize
-      Source.all.each do |source|
-        puts "Indexing #{source.path}"
-        each_release(source.path) do |release_path|
-          index_release(release_path)
+      self.class.lock do
+        Source.all.each do |source|
+          puts "Indexing #{source.path}"
+          each_release(source.path) do |release_path|
+            index_release(release_path)
+          end
         end
       end
     end
 
+    def self.running?
+      File.exist?(LOCK_FILE)
+    end
+
     protected
+
+    def self.lock(&block)
+      begin
+        unless running?
+          File.open(LOCK_FILE, "wb") do |f|
+            f.write(Process.pid)
+          end
+          yield
+        else
+          raise Exception.new("An indexing process is already running.")
+        end
+      ensure
+        File.delete(LOCK_FILE)
+      end
+    end
 
     def each_release(source, &block)
       raise "No block given" unless block_given?

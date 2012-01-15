@@ -62,15 +62,16 @@ nav.pagination
 
 a.button
   +button
+  display: inline-block
+  padding: 4px 8px
+  line-height: 12px
+
   &.unfavorite
     color: red
   &.play, &.enqueue, &.favorite, &.unfavorite
     +border-radius(5px)
     +drop-shadow
     +background-gradient
-    display: inline-block
-    padding: 4px 8px
-    line-height: 12px
 
 ul.pills
   +horizontal-list(2px)
