@@ -23,6 +23,8 @@ $ ->
       AudioPlayer.enqueueTracks($(this).attr("href"))
 
     originalTitle = document.title
+    $favicon = $("link[rel='shortcut icon']");
+
 
     window.Playlist = new jPlayerPlaylist(
       jPlayer: "#jquery_jplayer",
@@ -38,7 +40,8 @@ $ ->
 
       playing: (e) ->
         media = e.jPlayer.status.media
-        document.title = "▶ " + media.artist + " - " + media.title
+        $favicon.attr("href", "/assets/play.ico")
+        document.title = media.artist + " - " + media.title
         $currentTitle = $(e.jPlayer.options.cssSelectorAncestor + " .jp-current-title")
         $currentArtist = $(e.jPlayer.options.cssSelectorAncestor + " .jp-current-artist")
         $currentRelease = $(e.jPlayer.options.cssSelectorAncestor + " .jp-current-release")
@@ -50,7 +53,9 @@ $ ->
 
       pause: ->
         document.title = originalTitle
+        $favicon.attr("href", "/assets/favicon.ico")
 
       ended: ->
         document.title = originalTitle
+        $favicon.attr("href", "/assets/favicon.ico")
     )
