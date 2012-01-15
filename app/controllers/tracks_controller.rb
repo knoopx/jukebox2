@@ -15,9 +15,10 @@ class TracksController < ApplicationController
                 :title => resource.title,
                 :artist => resource.artist.name,
                 :artist_url => artist_url(resource.artist),
+                :release => resource.release.title,
                 :release_url => release_url(resource.release),
-                :mp3 => play_track_url(resource)
-            }
+                :release_images => resource.release.images,
+                :mp3 => play_track_url(resource)}
         ]
       end
     end
@@ -32,7 +33,9 @@ class TracksController < ApplicationController
               :title => resource.title,
               :artist => resource.artist.name,
               :artist_url => artist_url(resource.artist),
+              :release => resource.release.title,
               :release_url => release_url(resource.release),
+              :release_images => resource.release.images,
               :mp3 => play_track_url(resource)
           }
         end

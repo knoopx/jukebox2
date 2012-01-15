@@ -22,6 +22,8 @@ $ ->
       e.preventDefault()
       AudioPlayer.enqueueTracks($(this).attr("href"))
 
+    originalTitle = document.title
+
     window.Playlist = new jPlayerPlaylist(
       jPlayer: "#jquery_jplayer",
       cssSelectorAncestor: "#jp_container",
@@ -32,5 +34,23 @@ $ ->
       ,
       swfPath: "/swf/",
       supplied: "mp3",
-      wmode: "window"
+      wmode: "window",
+
+      playing: (e) ->
+        media = e.jPlayer.status.media
+        document.title = "▶ " + media.artist + " - " + media.title
+        $currentTitle = $(e.jPlayer.options.cssSelectorAncestor + " .jp-current-title")
+        $currentArtist = $(e.jPlayer.options.cssSelectorAncestor + " .jp-current-artist")
+        $currentRelease = $(e.jPlayer.options.cssSelectorAncestor + " .jp-current-release")
+        $currentArtwork = $(e.jPlayer.options.cssSelectorAncestor + " .jp-current-artwork")
+        $currentTitle.text(media.title)
+        $currentRelease.html($("<a>", href: media.release_url).text(media.release))
+        $currentArtist.html($("<a>", href: media.artist_url).text(media.artist))
+        $currentArtwork.html($("<img>", src: media.release_images.medium))
+
+      pause: ->
+        document.title = originalTitle
+
+      ended: ->
+        document.title = originalTitle
     )
