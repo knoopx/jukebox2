@@ -21,6 +21,7 @@
             %span= link_to(resource.name, resource)
             %small= time_ago_in_words(resource.favorited_at)
 
+    .panel
       %h2 Recenlty added artists
       %ul
         - Artist.recent(10).map do |resource|
