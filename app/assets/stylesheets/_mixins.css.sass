@@ -47,10 +47,17 @@
     text-decoration: none
     color: $primary-color
 
-
 =button-off
   +background-gradient
   +inset-drop-shadow
+
+=artwork
+  +border-radius(4px)
+  +box-shadow(0 0 0 1px alpha-white(0.25) inset, 0 0 5px 5px alpha-black(0.1))
+  background-repeat: none
+  background-size: cover
+  background-position: center center
+  overflow: hidden
 
 =zebra-stripe
   @if $dark-theme

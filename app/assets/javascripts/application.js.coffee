@@ -46,7 +46,7 @@ $ ->
         $currentTitle.text(media.title)
         $currentRelease.html($("<a>", href: media.release_url).text(media.release))
         $currentArtist.html($("<a>", href: media.artist_url).text(media.artist))
-        $currentArtwork.html($("<img>", src: media.release_images.medium))
+        $currentArtwork.css("background-image", "url(" + media.release_images.medium + ")")
 
       pause: ->
         document.title = originalTitle

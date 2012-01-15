@@ -1,7 +1,7 @@
 = div_for(release) do
   .artwork
     .wrapper
-      .image= image_tag((release.image_url.blank? ? "cd_case.png" : release.image_url), :witdh => 100, :height => 100)
+      .image{:style => "background-image: url(#{release.image_url.blank? ? image_path("no_cover.png") : release.image_url})"}
       .meta
         .title= release.title
         .artist= release.compilation? ? "Various Artists" : link_to(release.artist.name, release.artist)

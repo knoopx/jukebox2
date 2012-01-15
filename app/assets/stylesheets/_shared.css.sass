@@ -95,43 +95,38 @@ ul.pills
 
 .grid
   +clearfix
+  overflow: visible
+  margin: 10px
+
   .artist
-    float: left
+    +inline-block
     text-align: center
-    width: 75px
-    margin-right: 10px
-    margin-bottom: 10px
-    height: 120px
+    margin: 5px
+    max-width: 75px
 
     .image
-      position: relative
+      +artwork
       width: 75px
       height: 75px
-      overflow: hidden
       margin-bottom: 5px
-
-      img
-        +shadow
-        width: 75px
-        height: auto
+      overflow: visible
 
       a
         display: block
-        position: absolute
-        top: 0
-        left: 0
         width: 75px
         height: 75px
         line-height: 75px
         color: $text-emphasis-color
 
         .iconic
-          background: alpha-black(0.75)
           display: none
           font-size: 32px
 
         &:hover
+          +box-shadow(0 0 0 1px alpha-black(0.75) inset)
+          +border-radius(4px)
           text-decoration: none
+          background-color: alpha-black(0.75)
 
           .iconic
             display: inherit

@@ -17,12 +17,10 @@
 .page-header
   %strong Similar Artists
 
-.wrapper
-  .grid
-    - resource.similar.map do |artist|
-      .artist
-        .image
-          = image_tag(artist.image_url)
-          = link_to(iconic("e048"), [artist, :tracks], "data-play" => true)
+.grid
+  - resource.similar.map do |artist|
+    .artist
+      .image{:style => "background-image: url(#{artist.image_url})"}
+        = link_to(iconic("e048"), [artist, :tracks], "data-play" => true)
 
-        .name= link_to(artist.name, artist_path(artist))
+      .name= link_to(artist.name, artist_path(artist))
