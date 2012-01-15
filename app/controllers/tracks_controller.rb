@@ -45,7 +45,7 @@ class TracksController < ApplicationController
   end
 
   def play
-    resource.increment(:local_play_count)
+    resource.increment!(:local_play_count)
     file_path = resource.full_path
     length = File.size(file_path)
     status_code = 200
