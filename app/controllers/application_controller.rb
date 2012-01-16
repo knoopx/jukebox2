@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  inherit_resources
   include InheritedResources::ControllerScopes
   include Jukebox2::Navigation
 

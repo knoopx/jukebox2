@@ -1,4 +1,4 @@
-class SourcesController < ApplicationController
+class SourcesController < InheritedResources::Base
   actions :all, :except => [:new, :show]
   before_filter :build_resource, :only => :index
 

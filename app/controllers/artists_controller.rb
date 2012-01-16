@@ -1,4 +1,4 @@
-class ArtistsController < ApplicationController
+class ArtistsController < InheritedResources::Base
   include Jukebox2::Favorites::ControllerMethods
 
   belongs_to :genre, :optional => true

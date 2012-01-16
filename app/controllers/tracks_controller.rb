@@ -1,4 +1,4 @@
-class TracksController < ApplicationController
+class TracksController < InheritedResources::Base
   include Jukebox2::Favorites::ControllerMethods
   belongs_to :artist, :optional => true
   belongs_to :release, :optional => true

@@ -1,4 +1,4 @@
-class FrontpageController < ApplicationController
+class FrontpageController < InheritedResources::Base
   def index
   end
 end

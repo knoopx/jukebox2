@@ -1,6 +1,6 @@
 require 'iconv'
 
-class ReleasesController < ApplicationController
+class ReleasesController < InheritedResources::Base
   include Jukebox2::Favorites::ControllerMethods
   apply_filter_scopes
   search
