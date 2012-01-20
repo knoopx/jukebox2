@@ -5,6 +5,7 @@ class ArtistsController < InheritedResources::Base
 
   apply_filter_scopes
   includes(:genres)
+  includes({:releases => {:tracks => :artist}}, :only => :show)
   search
   paginate
 
