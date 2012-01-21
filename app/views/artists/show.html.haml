@@ -8,7 +8,7 @@
   = play_link([resource, :tracks], :class => "button")
   = enqueue_link([resource, :tracks], :class => "button")
   = favorite_link(resource, :class => "button")
-  .genres= raw resource.genres.map { |genre| link_to genre.name, artists_path(:search => {:genres_name_in => genre.name}) }.join("&nbsp;")
+  .genres= raw resource.tags_array.map { |tag| link_to tag, artists_path(:search => {:tagged => tag}) }.join("&nbsp;")
 
 .releases
   - resource.releases.each do |release|

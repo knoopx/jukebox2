@@ -55,12 +55,9 @@ module Jukebox2
     end
 
     def index_release(release_path)
-      #ActiveRecord::Base.logger = Logger.new(STDOUT)
       puts " * Processing #{File.basename(release_path)}"
       begin
-        Release.transaction do
-          Release.find_or_create_by_path(release_path)
-        end
+        Release.find_or_create_by(:path => release_path)
       rescue Exception => e
         puts " !!! #{e}:\r\n#{e.backtrace.join("\r\n")}"
       end

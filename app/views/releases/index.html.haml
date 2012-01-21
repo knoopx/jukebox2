@@ -6,7 +6,7 @@
 
 
 .wrapper
-  = semantic_form_for(@search, :url => collection_path) do |f|
+  = semantic_form_for(:search, :url => collection_path, :method => :get) do |f|
     = f.inputs do
       = f.input :name_like
       = f.submit "Search"
@@ -14,9 +14,9 @@
 %table
   %thead
     %tr
-      %th= sort_link(@search, :name)
-      %th= sort_link(@search, :tracks_count)
-      %th= sort_link(@search, :created_at)
+      %th= #sort_link(@search, :name)
+      %th= #sort_link(@search, :tracks_count)
+      %th= #sort_link(@search, :created_at)
       %th
   %tbody
     - collection.each do |resource|

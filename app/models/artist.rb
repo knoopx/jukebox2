@@ -1,45 +1,59 @@
 require 'open-uri'
 
-class Artist < ActiveRecord::Base
+class Artist
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Taggable
   include Jukebox2::Favorites::ModelMethods
+  include Jukebox2::Search::Scope
 
-  has_and_belongs_to_many :releases, :order => :year.desc
-  has_many :taggings, :uniq => true
+  field :name
+  field :normalized_name
+  field :summary
+  field :biography
+  field :lastfm_url
+
+  field :mbid
+  field :similar_mbids, :type => Array, :default => []
+
+  field :images, :type => Hash, :default => {}
+
+  field :favorited_at, :type => DateTime
+
+  field :listeners, :type => Integer, :default => 0
+  field :play_count, :type => Integer, :default => 0
+
+  field :tracks_count, :type => Integer, :default => 0
+  field :releases_count, :type => Integer, :default => 0
+
+  key :normalized_name
+  index :mbid, :uniq => true
+
+  has_and_belongs_to_many :releases, :dependent => :destroy, :order => :year.desc
   has_many :tracks
-  has_many :genres, :through => :taggings, :uniq => true
-
-  scope :recent, lambda { |limit| order(:created_at.desc).limit(limit) }
-  scope :genres_id_in, lambda { |genres| joins(:taggings).where(:taggings => {:genre_id => genres}) }
-  scope :genres_id_not_in, lambda { |genres| joins(:taggings).where(:taggings => {:genre_id.not_in => genres}) }
-
-  scope :genres_name_in, lambda { |genres_names|
-    genres = genres_names.split(",").map { |name| Genre.where(:name.like => "%#{name.strip}%").first }.reject(&:blank?)
-    joins(:taggings).
-        where(:taggings => {:genre_id => genres}).
-        group("artist_id").
-        having("COUNT(artist_id) = ?", genres.size)
-  }
-
-  search_method :genres_name_in
 
   validates_presence_of :normalized_name, :name
   validates_uniqueness_of :name
 
+  scope :recent, lambda { |limit| desc(:created_at).limit(limit) }
+  scope :name_like, lambda { |name| where(:name => /#{name}/i) }
+  scope :tagged, lambda { |tags| tagged_with_all(tags.split(", ")) }
+
+  search_scope :name_like
+  search_scope :tagged
+
   before_save :normalize_name
   after_create :update_metadata, :update_similar_artists
-
-  serialize :similar_mbids, Array
-  serialize :images, Hash
 
   def random_track
     releases.map(&:tracks).flatten.sample
   end
 
   def similar
-    similar_mbids.nil? ? [] : self.class.where(:mbid => similar_mbids)
+    self.class.any_in(:mbid => similar_mbids)
   end
 
-  def image_url(format = :large)
+  def image_url(format = "large")
     self.images[format]
   end
 
@@ -61,9 +75,8 @@ class Artist < ActiveRecord::Base
                              :play_count => artist["stats"]["playcount"],
                              :images => artist["image"].each_with_object({}) { |image, hash| hash[image["size"].to_sym] = image["#text"] },
                              :summary => artist["bio"]["summary"],
-                             :biography => artist["bio"]["content"]
-
-      self.genres = Array.wrap(artist["tags"]["tag"]).map { |tag| Genre.find_or_create_by_name(tag["name"]) }
+                             :biography => artist["bio"]["content"],
+                             :tags_array => Array.wrap(artist["tags"]["tag"]).map { |tag| tag["name"] }
     end
   end
 
@@ -85,13 +98,12 @@ class Artist < ActiveRecord::Base
 
   class << self
     def reset_counters!
-      transaction do
-        self.find_each do |artist|
-          self.reset_counters(artist.id, :tracks)
-        end
+      self.all.each do |artist|
+        self.reset_counters(artist.id, :tracks)
       end
     end
   end
+
   protected
 
   def normalize_name

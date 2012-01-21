@@ -1,11 +1,12 @@
 class TracksController < InheritedResources::Base
   include Jukebox2::Favorites::ControllerMethods
+
   belongs_to :artist, :optional => true
   belongs_to :release, :optional => true
 
   apply_filter_scopes
   search
-  paginate
+  paginate :unless => lambda { parent? }
 
   def show
     respond_to do |format|
@@ -45,7 +46,7 @@ class TracksController < InheritedResources::Base
   end
 
   def play
-    resource.increment!(:local_play_count)
+    resource.inc(:local_play_count, 1)
     file_path = resource.full_path
     length = File.size(file_path)
     status_code = 200

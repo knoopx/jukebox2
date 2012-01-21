@@ -3,11 +3,11 @@
     - n.default link_to "All", releases_path
     - n.favorited link_to "Favorited", releases_path(:scope => :favorited)
   %strong Tracks
-  = play_link(tracks_path(:search => @search.search_attributes), :class => "button")
-  = enqueue_link(tracks_path(:search => @search.search_attributes), :class => "button")
+  = play_link(tracks_path(:search => params[:search]), :class => "button")
+  = enqueue_link(tracks_path(:search => params[:search]), :class => "button")
 
 .wrapper
-  = semantic_form_for(@search, :url => collection_path) do |f|
+  = semantic_form_for(:search, :url => collection_path, :method => :get) do |f|
     = f.inputs do
       = f.input :title_or_artist_name_or_release_name_like
       = f.submit "Search"
@@ -16,9 +16,9 @@
   %thead
     %tr
       %th
-      %th= sort_link(@search, :title)
-      %th= sort_link(@search, :length)
-      %th= sort_link(@search, :created_at)
+      %th= #sort_link(@search, :title)
+      %th= #sort_link(@search, :length)
+      %th= #sort_link(@search, :created_at)
       %th
   %tbody
     - collection.each do |resource|

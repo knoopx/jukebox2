@@ -3,13 +3,7 @@ module InheritedResources
     extend ActiveSupport::Concern
 
     included do
-      #if respond_to?(:apply_scopes)
-        # has_scope available
-        alias_method_chain :apply_scopes, :controller_scopes
-      #else
-        # just emulate has_scope
-        #alias_method :apply_scopes, :apply_controller_scopes
-      #end
+      alias_method_chain :apply_scopes, :controller_scopes
     end
 
     module InstanceMethods
@@ -30,7 +24,7 @@ module InheritedResources
         attr_reader :opts, :block
 
         def initialize(opts = {}, block)
-          opts.assert_valid_keys(:only, :except)
+          opts.assert_valid_keys(:only, :except, :if, :unless)
           @opts, @block = opts, block
         end
 
@@ -41,12 +35,14 @@ module InheritedResources
         def execute?(controller)
           only = Array.wrap(@opts[:only])
           except = Array.wrap(@opts[:except])
+          _if = @opts[:if] || true
+          _unless = @opts[:unless] || false
 
           if only.empty?
             except.empty? || !except.include?(controller.action_name.to_sym)
           else
             only.include?(controller.action_name.to_sym)
-          end
+          end# and _if and not _unless
         end
       end
 

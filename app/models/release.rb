@@ -1,5 +1,32 @@
-class Release < ActiveRecord::Base
+class Release
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Jukebox2::Search::Scope
   include Jukebox2::Favorites::ModelMethods
+
+  field :name
+  field :review
+  field :summary
+  field :title
+  field :path
+  field :year
+
+  field :various_artists, :type => Boolean, :default => false
+  field :mbid
+
+  field :lastfm_url
+  field :name
+
+  field :listeners, :type => Integer, :default => 0
+  field :play_count, :type => Integer, :default => 0
+  field :tracks_count, :type => Integer, :default => 0
+
+  field :images, :type => Hash, :default => {}
+
+  field :released_at, :type => DateTime
+  field :favorited_at, :type => DateTime
+
+  field :tracks_count, :type => Integer, :default => 0
 
   has_and_belongs_to_many :artists
   has_many :tracks, :dependent => :destroy, :order => :number.asc
@@ -8,9 +35,9 @@ class Release < ActiveRecord::Base
   before_create :process_release
   after_create :update_metadata
 
-  serialize :images, Hash
-
-  scope :recent, lambda { |limit| order(:created_at.desc).limit(limit) }
+  scope :recent, lambda { |limit| desc(:created_at).limit(limit) }
+  scope :name_like, lambda { |name| where(:name => /#{name}/i) }
+  search_scope :name_like
 
   def process_release
     self.name = File.basename(self.path)
@@ -30,7 +57,9 @@ class Release < ActiveRecord::Base
         track.bitrate = id3.bitrate
         track.channels = id3.channels
         track.length = id3.length
-        track.artist = Artist.find_or_create_by_normalized_name(id3.artist.to_slug.normalize.to_s, :name => id3.artist)
+        track.artist = Artist.find_or_create_by(:normalized_name => id3.artist.to_slug.normalize.to_s) do |artist|
+          artist.name = id3.artist
+        end
         years << track.year unless years.include?(track.year)
       end
 
@@ -46,7 +75,9 @@ class Release < ActiveRecord::Base
     self.tracks = tracks
 
     self.artists = artists.map do |artist_name|
-      Artist.find_or_create_by_normalized_name(artist_name.to_slug.normalize.to_s, :name => artist_name)
+      Artist.find_or_create_by(:normalized_name => artist_name.to_slug.normalize.to_s) do |artist|
+        artist.name = artist_name
+      end
     end
 
     true
@@ -64,7 +95,7 @@ class Release < ActiveRecord::Base
     Dir.glob(File.join(self.path, "*.nfo")).first
   end
 
-  def image_url(format = :large)
+  def image_url(format = "large")
     self.images[format]
   end
 

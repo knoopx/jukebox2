@@ -1,10 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.1'
-gem 'mysql2'
-gem 'sqlite3'
-gem 'squeel'
-gem 'meta_search', :git => 'git://github.com/ernie/meta_search.git'
+gem 'rails', '~> 3.2'
 
 group :assets do
   gem 'sass-rails'
@@ -12,6 +8,10 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'mongoid'
+gem 'mongoid_taggable'
+gem 'mongoid_counter_cache'
+gem 'bson_ext'
 gem 'kaminari'
 gem 'has_scope'
 gem 'inherited_resources'
