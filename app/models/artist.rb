@@ -58,25 +58,29 @@ class Artist
   end
 
   def update_metadata
-    response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
-        :api_key => "b25b959554ed76058ac220b7b2e0a026",
-        :format => "json",
-        :method => "artist.getinfo",
-        :artist => self.name
-    })
+    begin
+      response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
+          :api_key => "b25b959554ed76058ac220b7b2e0a026",
+          :format => "json",
+          :method => "artist.getinfo",
+          :artist => self.name
+      })
 
-    # todo: use last.fm artist instead of the one from id3!
+      # todo: use last.fm artist instead of the one from id3!
 
-    response["artist"].tap do |artist|
-      self.update_attributes :name => artist["name"],
-                             :mbid => artist["mbid"],
-                             :lastfm_url => artist["url"],
-                             :listeners => artist["stats"]["listeners"],
-                             :play_count => artist["stats"]["playcount"],
-                             :images => artist["image"].each_with_object({}) { |image, hash| hash[image["size"].to_sym] = image["#text"] },
-                             :summary => artist["bio"]["summary"],
-                             :biography => artist["bio"]["content"],
-                             :tags_array => Array.wrap(artist["tags"]["tag"]).map { |tag| tag["name"] }
+      response["artist"].tap do |artist|
+        self.update_attributes :name => artist["name"],
+                               :mbid => artist["mbid"],
+                               :lastfm_url => artist["url"],
+                               :listeners => artist["stats"]["listeners"],
+                               :play_count => artist["stats"]["playcount"],
+                               :images => artist["image"].each_with_object({}) { |image, hash| hash[image["size"].to_sym] = image["#text"] },
+                               :summary => artist["bio"]["summary"],
+                               :biography => artist["bio"]["content"],
+                               :tags_array => Array.wrap(artist["tags"]["tag"]).map { |tag| tag["name"] }
+      end
+    rescue => e
+      puts e
     end
   end
 
