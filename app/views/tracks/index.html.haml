@@ -25,7 +25,8 @@
         %td.number= resource.number
         %td.title
           = resource.title
-          %small= link_to resource.artist.name, artist_path(resource.artist)
+          - if resource.artist.present?
+            %small= link_to resource.artist.name, artist_path(resource.artist)
         %td.length= formatted_length resource.length
         %td.date= time_ago_in_words(resource.created_at)
         %td.actions
