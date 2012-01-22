@@ -1,32 +1,29 @@
 .page-header
-  = navigation(:class => "pills pull-right", :namespace => :scope) do |n|
-    - n.default link_to "All", artists_path
-    - n.favorited link_to (iconic("2764") + " Favorited"), artists_path(:scope => :favorited)
-
+  = filter(:default, :favorited)
   %strong Artists
 
 .wrapper
-  = semantic_form_for(@search, :url => collection_path) do |f|
+  = semantic_form_for(:search, :url => collection_path, :method => :get) do |f|
     = f.inputs do
       = f.input :name_like
-      = f.input :genres_name_in
+      = f.input :tagged
       = f.submit "Search"
 
 %table
   %thead
     %tr
-      %th= sort_link(@search, :name)
-      %th Genres
-      %th= sort_link(@search, :tracks_count)
-      %th= sort_link(@search, :play_count)
-      %th= sort_link(@search, :listeners)
-      %th= sort_link(@search, :created_at)
+      %th= sort_link(:name)
+      %th Tags
+      %th= sort_link(:tracks_count)
+      %th= sort_link(:play_count)
+      %th= sort_link(:listeners)
+      %th= sort_link(:created_at)
       %th
   %tbody
     - collection.each do |resource|
       %tr
         %td= link_to resource.name, resource, :class => "title"
-        %td= raw resource.genres.take(10).map { |genre| link_to genre.name, artists_path(:search => {:genres_name_in => genre.name}) }.to_sentence
+        %td= raw resource.tags_array.take(10).map { |tag| link_to tag, artists_path(:search => {:tagged => tag}) }.to_sentence
         %td= resource.tracks_count
         %td= resource.play_count
         %td= resource.listeners

@@ -1,4 +1,7 @@
 module ApplicationHelper
+  include Jukebox2::Sorting::Helpers
+  include Jukebox2::Filtering::Helpers
+
   def iconic(char)
     content_tag(:span, "&#x#{char};".html_safe, :class => "iconic")
   end

@@ -4,7 +4,7 @@ module Jukebox2
       extend ActiveSupport::Concern
 
       included do
-        scope :favorited, where { favorited_at != nil }.order { favorited_at.desc }
+        scope :favorited, excludes(:favorited_at => nil).desc(:favorited_at)
 
         def favorited?
           !favorited_at.nil?
@@ -20,7 +20,7 @@ module Jukebox2
 
       def toggle_favorite
         if resource.favorited_at.nil?
-          resource.touch(:favorited_at)
+          resource.update_attribute(:favorited_at, DateTime.now)
         else
           resource.update_attribute(:favorited_at, nil)
         end

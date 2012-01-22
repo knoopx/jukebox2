@@ -34,5 +34,5 @@
     .panel
       %h2 Top Genres
       %ul
-        - Genre.top(20).map do |resource|
-          %li= link_to("#{resource.name} (#{resource.artists_count})", artists_path(:search => {:genres_name_in => resource.name}))
+        - Artist.tags_with_weight.sort_by{|tag, count| count}.reverse.take(20).map do |tag, count|
+          %li= link_to("#{tag} (#{count})", artists_path(:search => {:tagged => tag}))
