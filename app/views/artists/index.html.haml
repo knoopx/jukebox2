@@ -1,8 +1,5 @@
 .page-header
-  = navigation(:class => "pills pull-right", :namespace => :scope) do |n|
-    - n.default link_to "All", artists_path
-    - n.favorited link_to (iconic("2764") + " Favorited"), artists_path(:scope => :favorited)
-
+  = filter(:default, :favorited)
   %strong Artists
 
 .wrapper
@@ -15,12 +12,12 @@
 %table
   %thead
     %tr
-      %th= #sort_link(@search, :name)
+      %th= sort_link(:name)
       %th Tags
-      -#%th= sort_link(@search, :tracks_count)
-      %th= #sort_link(@search, :play_count)
-      %th= #sort_link(@search, :listeners)
-      %th= #sort_link(@search, :created_at)
+      %th= sort_link(:tracks_count)
+      %th= sort_link(:play_count)
+      %th= sort_link(:listeners)
+      %th= sort_link(:created_at)
       %th
   %tbody
     - collection.each do |resource|

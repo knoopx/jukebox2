@@ -1,11 +1,17 @@
 module Jukebox2
   module Search
+    PARAM_NAME = :search
+
     module ControllerMethods
       extend ActiveSupport::Concern
 
       module ClassMethods
+        def apply_search
+          scoped(:only => :index) do |target|
+            target.scoped.scoped_search(params[PARAM_NAME])
+          end
+        end
       end
-
     end
 
     module Scope

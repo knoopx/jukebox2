@@ -4,9 +4,12 @@ class TracksController < InheritedResources::Base
   belongs_to :artist, :optional => true
   belongs_to :release, :optional => true
 
-  apply_filter_scopes
-  search
-  paginate :unless => lambda { parent? }
+  set_default_sort_attribute :number
+
+  apply_filtering
+  apply_sorting
+  apply_search
+  apply_pagination :unless => lambda { parent? }
 
   def show
     respond_to do |format|

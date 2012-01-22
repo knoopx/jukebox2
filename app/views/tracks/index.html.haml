@@ -1,7 +1,6 @@
 .page-header
-  = navigation(:class => "pills pull-right", :namespace => :scope) do |n|
-    - n.default link_to "All", releases_path
-    - n.favorited link_to "Favorited", releases_path(:scope => :favorited)
+  = filter(:default, :favorited)
+
   %strong Tracks
   = play_link(tracks_path(:search => params[:search]), :class => "button")
   = enqueue_link(tracks_path(:search => params[:search]), :class => "button")
@@ -16,9 +15,9 @@
   %thead
     %tr
       %th
-      %th= #sort_link(@search, :title)
-      %th= #sort_link(@search, :length)
-      %th= #sort_link(@search, :created_at)
+      %th= sort_link(:title)
+      %th= sort_link(:length)
+      %th= sort_link(:created_at)
       %th
   %tbody
     - collection.each do |resource|

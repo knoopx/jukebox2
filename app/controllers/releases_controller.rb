@@ -2,9 +2,13 @@ require 'iconv'
 
 class ReleasesController < InheritedResources::Base
   include Jukebox2::Favorites::ControllerMethods
-  apply_filter_scopes
-  search
-  paginate
+
+  set_default_sort_attribute :name
+
+  apply_filtering
+  apply_sorting
+  apply_search
+  apply_pagination
 
   def update_metadata
     resource.update_metadata
