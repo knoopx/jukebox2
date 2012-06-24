@@ -2,7 +2,7 @@ require 'jukebox2/indexer'
 
 namespace :jukebox2 do
   task :artists => :environment do
-    Artist.all.each do |artist|
+    Artist.where(:mbid => nil).each do |artist|
       puts " * Processing #{artist.name}"
       artist.update_metadata
     end
