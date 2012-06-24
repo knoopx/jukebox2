@@ -35,4 +35,4 @@
       %h2 Top Genres
       %ul
         - Artist.tags_with_weight.sort_by{|tag, count| count}.reverse.take(20).map do |tag, count|
-          %li= link_to("#{tag} (#{count})", artists_path(:search => {:tagged => tag}))
+          %li= link_to("#{tag} (#{count.to_i})", artists_path(:search => {:tagged => tag}))
