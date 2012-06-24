@@ -24,7 +24,7 @@ class Track
   counter_cache :name => :release, :inverse_of => :tracks
 
   scope :title_or_artist_name_or_release_name_like, lambda { |query|
-    any_of(:title => /#{query}/i, :artist_name => /#{query}/i, :release_name => /#{query}/i)
+    any_of({:title => /#{query}/i}, {:artist_name => /#{query}/i}, {:release_name => /#{query}/i})
   }
   search_scope :title_or_artist_name_or_release_name_like
 
