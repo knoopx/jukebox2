@@ -9,7 +9,7 @@ namespace :jukebox2 do
   end
 
   task :releases => :environment do
-    Release.all.each do |release|
+    Release.where(:mbid => nil).each do |release|
       puts " * Processing #{release.name}"
       release.update_metadata
     end
