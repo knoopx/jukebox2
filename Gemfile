@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source :rubygems
 
 gem 'rails', '~> 3.2'
 
@@ -11,15 +11,20 @@ end
 gem 'mongoid'
 gem 'mongoid_taggable'
 gem 'mongoid_counter_cache'
+
 gem 'bson_ext'
+
 gem 'kaminari'
 gem 'has_scope'
 gem 'inherited_resources'
-gem 'haml-rails'
+
 gem 'formtastic'
-gem 'compass', :git => 'git://github.com/chriseppstein/compass.git'
+
+gem 'haml-rails'
+gem 'compass-rails'
 gem 'jquery-rails'
 gem 'prototype-rails'
+
 gem 'capistrano'
 
 gem 'ruby-taglib2', :require => 'taglib2'
