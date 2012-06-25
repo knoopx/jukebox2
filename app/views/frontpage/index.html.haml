@@ -4,30 +4,53 @@
 .span-one-third
   .wrapper
     .panel
-      %h2 Recenlty added releases
-      %ul
+      %h2
+        Recenlty added releases
+        %small= link_to "View all", releases_path(dir: :desc, sort: :created_at)
+
+      %table
         - Release.recent(20).map do |resource|
-          %li
-            %span= link_to(resource.name, resource)
-            %small= time_ago_in_words(resource.created_at)
+          %tr
+            %td
+              %span= link_to(resource.name, resource)
+              %small= time_ago_in_words(resource.created_at)
+            %td.actions
+              = play_link([resource, :tracks])
+              = enqueue_link([resource, :tracks])
+              = favorite_link(resource)
 
 .span-one-third
   .wrapper
     .panel
-      %h2 Recenlty favorited artists
-      %ul
+      %h2
+        Recenlty favorited artists
+        %small= link_to "View all", artists_path(filter: :favorited)
+      %table
         - Artist.favorited.limit(10).map do |resource|
-          %li
-            %span= link_to(resource.name, resource)
-            %small= time_ago_in_words(resource.favorited_at)
+          %tr
+            %td
+              %span= link_to(resource.name, resource)
+              %small= time_ago_in_words(resource.favorited_at)
+            %td.actions
+              = play_link([resource, :tracks])
+              = enqueue_link([resource, :tracks])
+              = favorite_link(resource)
 
     .panel
-      %h2 Recenlty added artists
-      %ul
+      %h2
+        Recenlty added artists
+        %small= link_to "View all", artists_path(dir: :desc, sort: :created_at)
+      %table
         - Artist.recent(10).map do |resource|
-          %li
-            %span= link_to(resource.name, resource)
-            %small= time_ago_in_words(resource.created_at)
+          %tr
+            %td
+              %span= link_to(resource.name, resource)
+              %small= time_ago_in_words(resource.created_at)
+            %td.actions
+              = play_link([resource, :tracks])
+              = enqueue_link([resource, :tracks])
+              = favorite_link(resource)
+
 
 .span-one-third
   .wrapper
