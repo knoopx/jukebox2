@@ -3,8 +3,18 @@ class SourcesController < InheritedResources::Base
   before_filter :build_resource, :only => :index
 
   def reindex
-    system "bundle exec rake jukebox2:scan RAILS_ENV=#{Rails.env} &"
     flash[:notice] = "Now scanning for new releases"
+    Rails.queue.clear
+    Source.all.each do |source|
+      Rails.queue.push do
+        Rails.logger.info "Indexing #{source.path}"
+
+        Jukebox2::Indexer.each_release(source.path) do |release_path|
+          Rails.queue.push { Jukebox2::Indexer.index_release(release_path) }
+        end
+      end
+    end
+
     redirect_to sources_path
   end
 end

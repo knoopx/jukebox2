@@ -108,22 +108,24 @@ class Release
   end
 
   def update_metadata
-    response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
-        :api_key => "b25b959554ed76058ac220b7b2e0a026",
-        :format => "json",
-        :method => "album.getinfo",
-        :artist => self.artists.map(&:name).join(" "),
-        :album => self.title
-    })
+    Rails.queue.push do
+      response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
+          :api_key => "b25b959554ed76058ac220b7b2e0a026",
+          :format => "json",
+          :method => "album.getinfo",
+          :artist => self.artists.map(&:name).join(" "),
+          :album => self.title
+      })
 
-    if album = response["album"]
-      update_attributes :mbid => album["mbid"],
-                        :images => album["image"].each_with_object({}) { |image, hash| hash[image["size"].to_sym] = image["#text"] },
-                        :lastfm_url => album["url"],
-                        :listeners => album["listeners"],
-                        :play_count => album["playcount"],
-                        :released_at => (Date.parse(album["releasedate"].strip) rescue nil),
-                        :year => (Date.parse(album["releasedate"].strip).year rescue self.year)
+      if album = response["album"]
+        update_attributes :mbid => album["mbid"],
+                          :images => album["image"].each_with_object({}) { |image, hash| hash[image["size"].to_sym] = image["#text"] },
+                          :lastfm_url => album["url"],
+                          :listeners => album["listeners"],
+                          :play_count => album["playcount"],
+                          :released_at => (Date.parse(album["releasedate"].strip) rescue nil),
+                          :year => (Date.parse(album["releasedate"].strip).year rescue self.year)
+      end
     end
     true
   end

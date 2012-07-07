@@ -1,9 +1,5 @@
 .page-header
-  .pull-right
-    - if Jukebox2::Indexer.running?
-      Scan in progress
-    - else
-      = link_to "Scan Sources", reindex_sources_path, :class => "button", :disable => "Working"
+  .pull-right= link_to "Scan Sources", reindex_sources_path, :class => "button", :disable => "Working"
 
   %strong Sources
 

@@ -1,6 +1,7 @@
 development:
   host: localhost
   database: jukebox2
+  pool_size: 30
 
 test:
   host: localhost

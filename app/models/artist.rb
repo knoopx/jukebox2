@@ -58,46 +58,52 @@ class Artist
   end
 
   def update_metadata
-    begin
-      response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
-          :api_key => "b25b959554ed76058ac220b7b2e0a026",
-          :format => "json",
-          :method => "artist.getinfo",
-          :artist => self.name
-      })
+    Rails.queue.push do
+      begin
+        response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
+            :api_key => "b25b959554ed76058ac220b7b2e0a026",
+            :format => "json",
+            :method => "artist.getinfo",
+            :artist => self.name
+        })
 
-      # todo: use last.fm artist instead of the one from id3!
+        # todo: use last.fm artist instead of the one from id3!
 
-      response["artist"].tap do |artist|
-        self.update_attributes :name => artist["name"],
-                               :mbid => artist["mbid"],
-                               :lastfm_url => artist["url"],
-                               :listeners => artist["stats"]["listeners"],
-                               :play_count => artist["stats"]["playcount"],
-                               :images => artist["image"].each_with_object({}) { |image, hash| hash[image["size"].to_sym] = image["#text"] },
-                               :summary => artist["bio"]["summary"],
-                               :biography => artist["bio"]["content"],
-                               :tags_array => Array.wrap(artist["tags"]["tag"]).map { |tag| tag["name"] }
+        response["artist"].tap do |artist|
+          self.update_attributes :name => artist["name"],
+                                 :mbid => artist["mbid"],
+                                 :lastfm_url => artist["url"],
+                                 :listeners => artist["stats"]["listeners"],
+                                 :play_count => artist["stats"]["playcount"],
+                                 :images => artist["image"].each_with_object({}) { |image, hash| hash[image["size"].to_sym] = image["#text"] },
+                                 :summary => artist["bio"]["summary"],
+                                 :biography => artist["bio"]["content"],
+                                 :tags_array => Array.wrap(artist["tags"]["tag"]).map { |tag| tag["name"] }
+        end
+      rescue => e
+        puts e
       end
-    rescue => e
-      puts e
     end
+    true
   end
 
   def update_similar_artists
-    begin
-      # http://ws.audioscrobbler.com/2.0/?api_key=b25b959554ed76058ac220b7b2e0a026&method=artist.getsimilar&artist=kidcrash
-      response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
-          :api_key => "b25b959554ed76058ac220b7b2e0a026",
-          :format => "json",
-          :method => "artist.getsimilar",
-          :artist => self.name
-      })
+    Rails.queue.push do
+      begin
+        # http://ws.audioscrobbler.com/2.0/?api_key=b25b959554ed76058ac220b7b2e0a026&method=artist.getsimilar&artist=kidcrash
+        response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
+            :api_key => "b25b959554ed76058ac220b7b2e0a026",
+            :format => "json",
+            :method => "artist.getsimilar",
+            :artist => self.name
+        })
 
-      update_attribute :similar_mbids, response["similarartists"]["artist"].map { |a| a["mbid"] }.reject(&:blank?)
-    rescue => e
-      puts e
+        update_attribute :similar_mbids, response["similarartists"]["artist"].map { |a| a["mbid"] }.reject(&:blank?)
+      rescue => e
+        puts e
+      end
     end
+    true
   end
 
   class << self
