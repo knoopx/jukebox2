@@ -1,7 +1,10 @@
 Jukebox2::Application.routes.draw do
   resources :artists do
+    post :merge, :on => :collection
+
     get :toggle_favorite, :on => :member
     get :update_metadata, :on => :member
+
     resources :tracks
   end
 

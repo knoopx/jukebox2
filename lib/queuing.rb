@@ -15,8 +15,10 @@ module Queueing
     initializer :activate_queue_consumer do |app|
       puts "Starting queue"
       app.queue = Queue.new
-      app.queue_consumer = ThreadedConsumer.start(app.queue)
-      #at_exit { app.queue_consumer.shutdown }
+      unless Rails.env.test?
+        app.queue_consumer = ThreadedConsumer.start(app.queue)
+        at_exit { app.queue_consumer.shutdown }
+      end
     end
   end
 

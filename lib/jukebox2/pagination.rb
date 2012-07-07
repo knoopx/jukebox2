@@ -7,7 +7,7 @@ module Jukebox2
         def apply_pagination(opts = {})
           scoped(opts.merge(:only => :index)) do |target|
             if parent?
-              target
+              target.limit(1000)
             else
               target.page(params.fetch(:page, 1))
             end

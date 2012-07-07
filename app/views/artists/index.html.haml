@@ -9,28 +9,33 @@
       = f.input :tagged, :input_html => {:size => 50}
       = f.submit "Search"
 
-%table
-  %thead
-    %tr
-      %th= sort_link(:name)
-      %th Tags
-      %th= sort_link(:tracks_count)
-      %th= sort_link(:play_count)
-      %th= sort_link(:listeners)
-      %th= sort_link(:created_at)
-      %th
-  %tbody
-    - collection.each do |resource|
+= form_tag(merge_artists_path) do
+  %table
+    %thead
       %tr
-        %td= link_to resource.name, resource, :class => "title"
-        %td= raw resource.tags_array.take(10).map { |tag| link_to tag, artists_path(:search => {:tagged => tag}) }.to_sentence
-        %td= resource.tracks_count
-        %td= resource.play_count
-        %td= resource.listeners
-        %td= time_ago_in_words(resource.created_at)
-        %td.actions
-          = play_link([resource, :tracks])
-          = enqueue_link([resource, :tracks])
-          = favorite_link(resource)
+        %th= sort_link(:name)
+        %th Tags
+        %th= sort_link(:tracks_count)
+        %th= sort_link(:play_count)
+        %th= sort_link(:listeners)
+        %th= sort_link(:created_at)
+        %th
+    %tbody
+      - collection.each do |resource|
+        %tr
+          %td
+            = check_box_tag "artist_ids[]", resource.id
+            = link_to resource.name, resource, :class => "title"
+          %td= raw resource.tags_array.take(10).map { |tag| link_to tag, artists_path(:search => {:tagged => tag}) }.to_sentence
+          %td= resource.tracks_count
+          %td= resource.play_count
+          %td= resource.listeners
+          %td= time_ago_in_words(resource.created_at)
+          %td.actions
+            = play_link([resource, :tracks])
+            = enqueue_link([resource, :tracks])
+            = favorite_link(resource)
+
+  = submit_tag "Merge selected"
 
 = paginate(collection)

@@ -14,6 +14,8 @@ class Artist
   field :lastfm_url
 
   field :mbid
+  field :mbids, :type => Array, :default => []
+
   field :similar_mbids, :type => Array, :default => []
 
   field :images, :type => Hash, :default => {}
@@ -42,8 +44,40 @@ class Artist
   search_scope :name_like
   search_scope :tagged
 
-  before_save :normalize_name
   after_create :update_metadata, :update_similar_artists
+
+  def merge_with(artists)
+    [*artists].each do |artist|
+      next if artist.id == self.id
+
+      artist.releases.each do |release|
+        release.artists.delete(artist)
+        release.artists << self
+      end
+
+      artist.tracks.each do |track|
+        track.artist = self
+        track.save
+      end
+
+      self.tags_array += artist.tags_array
+      self.mbids << artist.mbid
+      artist.reload.destroy
+    end
+
+    self.tags_array.reject!(&:blank?)
+    self.tags_array.compact!
+    self.mbids.reject!(&:blank?)
+    self.mbids.uniq!
+
+    self.favorited_at = artists.map(&:favorited_at).compact.sort.first
+    self.save
+
+    # TODO
+    #self.class.reset_counters(self.id, :tracks)
+    #self.class.reset_counters(self.id, :releases)
+  end
+
 
   def random_track
     releases.map(&:tracks).flatten.sample
@@ -104,19 +138,5 @@ class Artist
       end
     end
     true
-  end
-
-  class << self
-    def reset_counters!
-      self.all.each do |artist|
-        self.reset_counters(artist.id, :tracks)
-      end
-    end
-  end
-
-  protected
-
-  def normalize_name
-    self.normalized_name = self.name.to_slug.normalize.to_s
   end
 end

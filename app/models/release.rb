@@ -31,8 +31,8 @@ class Release
   has_and_belongs_to_many :artists
   has_many :tracks, :dependent => :destroy, :order => :number.asc
 
-  validates_uniqueness_of :path
-  before_create :process_release
+  validates_uniqueness_of :path, :unless => lambda { self.path.blank? }
+  before_create :process_release, :unless => lambda { self.path.blank? }
   after_create :update_metadata
 
   scope :recent, lambda { |limit| desc(:created_at).limit(limit) }
@@ -108,6 +108,8 @@ class Release
   end
 
   def update_metadata
+    return if self.title.blank? or self.artists.none?
+
     Rails.queue.push do
       response = Nestful.get("http://ws.audioscrobbler.com/2.0/", :format => :json, :params => {
           :api_key => "b25b959554ed76058ac220b7b2e0a026",

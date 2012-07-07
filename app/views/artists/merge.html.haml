@@ -1,0 +1,15 @@
+.page-header
+  %strong Merge Artists
+
+.wrapper
+  = form_tag(merge_artists_path) do
+    %ul
+      - @artists.each do |artist|
+        %li
+          = hidden_field_tag "artist_ids[]", artist.id
+          = radio_button_tag "primary_artist_id", artist.id
+          = artist.name
+
+
+    %br
+    = submit_tag "Merge artists"

@@ -54,12 +54,18 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
+    database_cleaner (0.8.0)
+    diff-lcs (1.1.3)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
     formtastic (2.2.1)
       actionpack (>= 3.0)
     fssm (0.2.9)
+    fuubar (1.0.0)
+      rspec (~> 2.0)
+      rspec-instafail (~> 0.2.0)
+      ruby-progressbar (~> 0.0.10)
     haml (3.1.6)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -140,6 +146,21 @@ GEM
       json (~> 1.4)
     responders (0.9.1)
       railties (~> 3.1)
+    rspec (2.10.0)
+      rspec-core (~> 2.10.0)
+      rspec-expectations (~> 2.10.0)
+      rspec-mocks (~> 2.10.0)
+    rspec-core (2.10.1)
+    rspec-expectations (2.10.0)
+      diff-lcs (~> 1.1.3)
+    rspec-instafail (0.2.4)
+    rspec-mocks (2.10.1)
+    rspec-rails (2.10.1)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec (~> 2.10.0)
+    ruby-progressbar (0.0.10)
     ruby-taglib2 (1.02)
     sass (3.1.20)
     sass-rails (3.2.5)
@@ -169,7 +190,9 @@ DEPENDENCIES
   capistrano
   coffee-rails
   compass-rails
+  database_cleaner
   formtastic
+  fuubar
   haml-rails
   has_scope
   hpricot
@@ -183,6 +206,7 @@ DEPENDENCIES
   nokogiri
   prototype-rails
   rails (~> 3.2)
+  rspec-rails
   ruby-taglib2
   sass-rails
   uglifier

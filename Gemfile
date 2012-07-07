@@ -26,6 +26,9 @@ gem 'jquery-rails'
 gem 'prototype-rails'
 
 gem 'capistrano'
+gem 'rspec-rails'
+gem 'database_cleaner'
+gem 'fuubar'
 
 gem 'ruby-taglib2', :require => 'taglib2'
 gem 'babosa'
