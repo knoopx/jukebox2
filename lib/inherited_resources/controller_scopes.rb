@@ -6,17 +6,15 @@ module InheritedResources
       alias_method_chain :apply_scopes, :controller_scopes
     end
 
-    module InstanceMethods
-      def apply_controller_scopes(target)
-        self.class.scopes.each do |scope|
-          target = scope.execute(self, target) if scope.execute?(self)
-        end
-        target
+    def apply_controller_scopes(target)
+      self.class.scopes.each do |scope|
+        target = scope.execute(self, target) if scope.execute?(self)
       end
+      target
+    end
 
-      def apply_scopes_with_controller_scopes(target, hash = params)
-        apply_scopes_without_controller_scopes(apply_controller_scopes(target), hash)
-      end
+    def apply_scopes_with_controller_scopes(target, hash = params)
+      apply_scopes_without_controller_scopes(apply_controller_scopes(target), hash)
     end
 
     module ClassMethods
@@ -42,7 +40,7 @@ module InheritedResources
             except.empty? || !except.include?(controller.action_name.to_sym)
           else
             only.include?(controller.action_name.to_sym)
-          end# and _if and not _unless
+          end # and _if and not _unless
         end
       end
 

@@ -19,10 +19,8 @@ module Jukebox2
         helper_method :current_filter
       end
 
-      module InstanceMethods
-        def current_filter
-          params[FILTER_PARAM_NAME].try(:to_sym)
-        end
+      def current_filter
+        params[FILTER_PARAM_NAME].try(:to_sym)
       end
 
       module ClassMethods

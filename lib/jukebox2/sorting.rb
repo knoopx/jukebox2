@@ -9,17 +9,15 @@ module Jukebox2
     module Helpers
       extend ActiveSupport::Concern
 
-      module InstanceMethods
-        def sort_link(attribute)
-          label = attribute.to_s.humanize
+      def sort_link(attribute)
+        label = attribute.to_s.humanize
 
-          if current_sort_attribute == attribute
-            label = [iconic(DIRECTION_ICON[current_sort_direction]), label].join(" ")
-            direction = INVERSE_DIRECTION[current_sort_direction]
-          end
-
-          link_to label.html_safe, params.deep_merge(ATTRIBUTE_PARAM_NAME => attribute, DIRECTION_PARAM_NAME => direction)
+        if current_sort_attribute == attribute
+          label = [iconic(DIRECTION_ICON[current_sort_direction]), label].join(" ")
+          direction = INVERSE_DIRECTION[current_sort_direction]
         end
+
+        link_to label.html_safe, params.deep_merge(ATTRIBUTE_PARAM_NAME => attribute, DIRECTION_PARAM_NAME => direction)
       end
     end
 
@@ -33,22 +31,20 @@ module Jukebox2
         helper_method :default_sort_direction
       end
 
-      module InstanceMethods
-        def current_sort_attribute
-          params[ATTRIBUTE_PARAM_NAME].try(:to_sym) || default_sort_attribute
-        end
+      def current_sort_attribute
+        params[ATTRIBUTE_PARAM_NAME].try(:to_sym) || default_sort_attribute
+      end
 
-        def current_sort_direction
-          params[DIRECTION_PARAM_NAME].try(:to_sym) || default_sort_direction
-        end
+      def current_sort_direction
+        params[DIRECTION_PARAM_NAME].try(:to_sym) || default_sort_direction
+      end
 
-        def default_sort_attribute
-          self.class.default_sort_attribute
-        end
+      def default_sort_attribute
+        self.class.default_sort_attribute
+      end
 
-        def default_sort_direction
-          self.class.default_sort_direction
-        end
+      def default_sort_direction
+        self.class.default_sort_direction
       end
 
       module ClassMethods
