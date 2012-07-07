@@ -6,7 +6,7 @@
   = enqueue_link(tracks_path(:search => params[:search]), :class => "button")
 
 .wrapper
-  = semantic_form_for(:search, :url => collection_path, :method => :get, :html => {:class => "horizontal"}) do |f|
+  = semantic_form_for(:search, :method => :get, :html => {:class => "horizontal"}) do |f|
     = f.inputs do
       = f.input :title_or_artist_name_or_release_name_like, :input_html => {:size => 100}
       = f.submit "Search"

@@ -22,7 +22,7 @@ module InheritedResources
         attr_reader :opts, :block
 
         def initialize(opts = {}, block)
-          opts.assert_valid_keys(:only, :except, :if, :unless)
+          opts.assert_valid_keys(:only, :except)
           @opts, @block = opts, block
         end
 
@@ -33,14 +33,12 @@ module InheritedResources
         def execute?(controller)
           only = Array.wrap(@opts[:only])
           except = Array.wrap(@opts[:except])
-          _if = @opts[:if] || true
-          _unless = @opts[:unless] || false
 
           if only.empty?
             except.empty? || !except.include?(controller.action_name.to_sym)
           else
             only.include?(controller.action_name.to_sym)
-          end # and _if and not _unless
+          end
         end
       end
 

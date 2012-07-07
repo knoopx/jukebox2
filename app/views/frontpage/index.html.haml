@@ -4,6 +4,18 @@
 .span-one-third
   .wrapper
     .panel
+      %h2 Playlists
+      %table
+        - Playlist.all.each do |name, klass|
+          %tr
+            %td= link_to(name.to_s.humanize, playlist_tracks_path(name))
+            %td.actions
+              = play_link(playlist_tracks_path(name))
+              = enqueue_link(playlist_tracks_path(name))
+
+.span-one-third
+  .wrapper
+    .panel
       %h2
         Recenlty added releases
         %small= link_to "View all", releases_path(dir: :desc, sort: :created_at)
@@ -19,8 +31,6 @@
               = enqueue_link([resource, :tracks])
               = favorite_link(resource)
 
-.span-one-third
-  .wrapper
     .panel
       %h2
         Recenlty favorited artists

@@ -1,6 +1,7 @@
 class TracksController < InheritedResources::Base
   include Jukebox2::Favorites::ControllerMethods
 
+  belongs_to :playlist, :optional => true
   belongs_to :artist, :optional => true
   belongs_to :release, :optional => true
 
@@ -9,7 +10,7 @@ class TracksController < InheritedResources::Base
   apply_filtering
   apply_sorting
   apply_search
-  apply_pagination :unless => lambda { parent? }
+  apply_pagination
 
   def show
     respond_to do |format|
