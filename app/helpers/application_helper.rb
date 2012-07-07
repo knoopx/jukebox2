@@ -27,6 +27,10 @@ module ApplicationHelper
     link_to iconic("2795"), href, opts.merge(:class => ["enqueue", opts[:class]].reject(&:blank?).join(" "), "data-enqueue" => true)
   end
 
+  def update_metadata_link(resource, opts = {})
+    link_to iconic("e031"), [:update_metadata, resource], opts.merge(:class => ["update_metadata", opts[:class]].reject(&:blank?).join(" "))
+  end
+
   def formatted_length(seconds)
     seconds = seconds.to_i # todo: just store it as int on database
     hours = seconds/3600
