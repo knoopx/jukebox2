@@ -4,9 +4,9 @@
 
 
 .wrapper
-  = semantic_form_for(:search, :url => collection_path, :method => :get) do |f|
+  = semantic_form_for(:search, :url => collection_path, :method => :get, :html => {:class => "horizontal"}) do |f|
     = f.inputs do
-      = f.input :name_like
+      = f.input :name_like, :input_html => {:size => 50}
       = f.submit "Search"
 
 %table
