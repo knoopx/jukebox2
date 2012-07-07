@@ -15,6 +15,7 @@ class ArtistsController < InheritedResources::Base
 
   def update_metadata
     resource.update_metadata
+    resource.update_similar_artists
     redirect_to resource
   end
 end
